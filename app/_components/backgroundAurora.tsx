@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 "use client";
 import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
@@ -158,6 +159,7 @@ export default function Aurora(props: AuroraProps) {
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) {
       // TypeScript may require a type assertion here.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (geometry.attributes as any).uv;
     }
 
