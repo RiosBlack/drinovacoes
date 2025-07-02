@@ -64,7 +64,7 @@ export default function CardProject({
           <p className="font-semibold text-zinc-400">{data}</p>
         </div>
         <h1 className="text-xl font-bold text-white">{titleCard}</h1>
-        <p className="text-sm text-zinc-400">{servicoDescricao}</p>
+        <p className="line-clamp-3 text-sm text-zinc-400">{servicoDescricao}</p>
         <p className="text-sm text-zinc-400">
           <span className="font-bold text-purple-800">Tec: </span>
           {tagTecnologia}

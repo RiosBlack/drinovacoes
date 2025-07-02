@@ -771,7 +771,10 @@ export default function Home() {
                 />
               )}
             </div>
-            <div className="flex-1 cursor-pointer border border-zinc-800">
+            <Link
+              href="/projetos"
+              className="flex-1 cursor-pointer border border-zinc-800"
+            >
               <div
                 className="fade-section-button fade-section-button2 flex h-full w-full items-center justify-center rounded-lg bg-purple-800"
                 onMouseEnter={() => {
@@ -786,7 +789,7 @@ export default function Home() {
                   <GoArrowUpRight className="fade-section-seta3 fade-section-seta4 h-8 w-8 text-zinc-400" />
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
