@@ -91,39 +91,47 @@ export default async function Page({ params }: Props) {
     <div className="relative flex h-full w-full flex-col items-center overflow-hidden">
       <Meteors number={30} />
       <HeaderMenu />
-      <div className="mt-24 w-[90%]">
+      <div className="mt-16 w-[95%] px-2 sm:mt-20 sm:w-[92%] sm:px-4 md:mt-24 md:w-[90%] md:px-0 lg:mt-24 lg:w-[90%] xl:mt-24 xl:w-[90%] 2xl:mt-24 2xl:w-[90%]">
         <BoxReveal boxColor={"#6B21A8"} duration={1.0}>
           <>
-            <h1 className="mt-12 text-7xl font-bold text-purple-800">
+            <h1 className="mt-8 text-center text-3xl font-bold text-purple-800 sm:mt-10 sm:text-center sm:text-4xl md:mt-12 md:text-left md:text-5xl lg:mt-12 lg:text-left lg:text-6xl xl:mt-12 xl:text-left xl:text-7xl 2xl:mt-12 2xl:text-left 2xl:text-7xl">
               {projeto.Projeto}
             </h1>
-            <ButtonVerAoVivo link={projeto.Link || ""} />
+            <div className="mt-4 flex justify-center sm:mt-5 sm:justify-center md:mt-6 md:justify-start lg:mt-6 lg:justify-start xl:mt-6 xl:justify-start 2xl:mt-6 2xl:justify-start">
+              <ButtonVerAoVivo link={projeto.Link || ""} />
+            </div>
           </>
         </BoxReveal>
         <div className="flex w-full flex-col items-center justify-center">
-          <div className="my-16 w-[80%] text-xl/8">
+          <div className="my-8 w-full text-base leading-relaxed sm:my-12 sm:w-[90%] sm:text-lg sm:leading-7 md:my-16 md:w-[85%] md:text-xl md:leading-8 lg:my-16 lg:w-[80%] lg:text-xl lg:leading-8 xl:my-16 xl:w-[80%] xl:text-xl xl:leading-8 2xl:my-16 2xl:w-[80%] 2xl:text-xl 2xl:leading-8">
             <BoxReveal boxColor={"#6B21A8"} duration={1.0}>
-              <p className="mt-4 text-justify">{projeto.Descricoes}</p>
+              <p className="mt-3 px-2 text-justify sm:mt-4 sm:px-4 md:mt-4 md:px-0 lg:mt-4 xl:mt-4 2xl:mt-4">
+                {projeto.Descricoes}
+              </p>
             </BoxReveal>
           </div>
 
-          <AnimatedImages
-            foto1={projeto.Foto1 || ""}
-            foto2={projeto.Foto2 || ""}
-            foto3={projeto.Foto3 || ""}
-          />
+          <div className="w-full px-2 sm:px-4 md:px-0">
+            <AnimatedImages
+              foto1={projeto.Foto1 || ""}
+              foto2={projeto.Foto2 || ""}
+              foto3={projeto.Foto3 || ""}
+            />
+          </div>
 
-          <AnimatedTechSection
-            techs={slugs}
-            originalTechs={[
-              projeto.Tech1,
-              projeto.Tech2,
-              projeto.Tech3,
-              projeto.Tech4,
-              projeto.Tech5,
-              projeto.Tech6,
-            ].filter((tech): tech is string => Boolean(tech))}
-          />
+          <div className="w-full px-2 sm:px-4 md:px-0">
+            <AnimatedTechSection
+              techs={slugs}
+              originalTechs={[
+                projeto.Tech1,
+                projeto.Tech2,
+                projeto.Tech3,
+                projeto.Tech4,
+                projeto.Tech5,
+                projeto.Tech6,
+              ].filter((tech): tech is string => Boolean(tech))}
+            />
+          </div>
         </div>
       </div>
     </div>
