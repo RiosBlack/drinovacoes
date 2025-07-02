@@ -48,7 +48,7 @@ export async function getPortifolioById(id: string): Promise<PortfolioItem[]> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return responseDate.results.map((post: any) => ({
-    Data: (post as NotionGet).properties.Data.rich_text[0]?.plain_text,
+    data: (post as NotionGet).properties.Data.rich_text[0]?.plain_text,
     Projeto: (post as NotionGet).properties.Projeto.title[0]?.text?.content,
     Capa: (post as NotionGet).properties.Capa.rich_text[0]?.plain_text,
     Foto1: (post as NotionGet).properties.Foto1.rich_text[0]?.plain_text,
