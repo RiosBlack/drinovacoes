@@ -13,6 +13,7 @@ type Props = {
   tagServico: string;
   tagTecnologia: string;
   image: string | StaticImageData;
+  onClick?: () => void;
 };
 
 export default function CardProject({
@@ -22,6 +23,7 @@ export default function CardProject({
   tagTecnologia,
   titleCard,
   image,
+  onClick,
 }: Props) {
   useEffect(() => {
     const imageScale = gsap.utils.toArray(".image-Scale");
@@ -48,7 +50,10 @@ export default function CardProject({
   }, []);
 
   return (
-    <div className="flex h-full w-full cursor-pointer flex-col p-4 hover:bg-zinc-900">
+    <div
+      className="flex h-full w-full cursor-pointer flex-col p-4 hover:bg-zinc-900"
+      onClick={onClick}
+    >
       <div className="space-y-3 p-9">
         <div className="flex items-center space-x-5">
           <p className="flex items-center font-semibold">

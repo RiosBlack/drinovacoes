@@ -5,6 +5,7 @@ import Aurora from "./_components/backgroundAurora";
 import HeaderMenu from "./_components/home/headerMenu";
 import GradientText from "./_components/textGradient";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Lenis from "lenis";
 import SplitText from "./_components/animationSplitText";
 import AnimatedContent from "./_components/animationContent";
@@ -44,8 +45,15 @@ export default function Home() {
       tagServico: string;
       tagTecnologia: string;
       image: string | StaticImageData;
+      id: string;
     }[]
   >([]);
+
+  const router = useRouter();
+
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/${projectId}`);
+  };
 
   useEffect(() => {
     async function fetchProjects() {
@@ -69,6 +77,7 @@ export default function Home() {
               .filter(Boolean)
               .join(", ") || "Tecnologias diversas",
           image: item.Miniatura || fotoTeste, // Usar a miniatura do Notion ou imagem padrão
+          id: item.Index || "", // Usar o Index como ID para navegação
         }));
 
         setProjectsMenu1(mappedProjects);
@@ -83,6 +92,7 @@ export default function Home() {
             tagServico: "....",
             tagTecnologia: "......",
             image: ".....",
+            id: "",
           },
         ]);
       }
@@ -729,30 +739,37 @@ export default function Home() {
                   tagServico={project.tagServico}
                   tagTecnologia={project.tagTecnologia}
                   image={project.image}
+                  onClick={() => handleProjectClick(project.id)}
                 />
               ))}
             </div>
           </div>
           <div className="flex h-[50vh] flex-1">
             <div className="flex-1 border border-zinc-800">
-              <CardProject
-                servicoDescricao="Criação de sistema de estoque"
-                data="10/02/2023"
-                titleCard="Sistema de Gestão de Estoque"
-                tagServico="Sistema"
-                tagTecnologia="React, Node.js, MongoDB"
-                image={fotoTeste}
-              />
+              {projectsMenu1.length > 0 && (
+                <CardProject
+                  servicoDescricao={projectsMenu1[0].servicoDescricao}
+                  data={projectsMenu1[0].data}
+                  titleCard={projectsMenu1[0].titleCard}
+                  tagServico={projectsMenu1[0].tagServico}
+                  tagTecnologia={projectsMenu1[0].tagTecnologia}
+                  image={projectsMenu1[0].image}
+                  onClick={() => handleProjectClick(projectsMenu1[0].id)}
+                />
+              )}
             </div>
             <div className="flex-1 border border-zinc-800">
-              <CardProject
-                servicoDescricao="Criação de sistema de estoque"
-                data="10/02/2023"
-                titleCard="Sistema de Gestão de Estoque"
-                tagServico="Sistema"
-                tagTecnologia="React, Node.js, MongoDB"
-                image={fotoTeste}
-              />
+              {projectsMenu1.length > 1 && (
+                <CardProject
+                  servicoDescricao={projectsMenu1[1].servicoDescricao}
+                  data={projectsMenu1[1].data}
+                  titleCard={projectsMenu1[1].titleCard}
+                  tagServico={projectsMenu1[1].tagServico}
+                  tagTecnologia={projectsMenu1[1].tagTecnologia}
+                  image={projectsMenu1[1].image}
+                  onClick={() => handleProjectClick(projectsMenu1[1].id)}
+                />
+              )}
             </div>
             <div className="flex-1 cursor-pointer border border-zinc-800">
               <div
