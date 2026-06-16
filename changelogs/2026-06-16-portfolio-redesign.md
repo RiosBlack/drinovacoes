@@ -12,7 +12,7 @@
 - Página `/projetos` atualizada para o mesmo visual
 - Integração Notion mantida para listagem de projetos
 - Background interativo `DotField` (React Bits) no hero, com cores douradas alinhadas à marca
-- Hero com scroll bloqueado na página até o terceiro dashboard; wheel/touch anima apenas o stack interno; após animação, próximo scroll libera e leva a Destaques
+- Hero com scroll bloqueado na página até o terceiro dashboard; wheel/touch anima apenas o stack interno; ao congelar o último card, o scroll da página libera imediatamente (sem gesto extra)
 - Ajuste de espaçamento do hero (redução ~70% entre CTAs e stack de dashboards) e correção de CLS nas imagens do stack
 - Correção do salto visual no reload: CSS inicial com container queries + `stackPosition` reduzido para 18% + inicialização do ScrollStack apenas após medição do container
 

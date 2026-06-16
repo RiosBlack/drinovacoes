@@ -13,6 +13,7 @@ import "./ScrollStack.css";
 export type ScrollStackHandle = {
   scroller: HTMLDivElement | null;
   isAtEnd: () => boolean;
+  getMaxScroll: () => number;
 };
 
 type ScrollStackProps = {
@@ -75,19 +76,7 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
     const lastTransformsRef = useRef<Map<number, CardTransform>>(new Map());
     const isUpdatingRef = useRef(false);
 
-    const isAtEnd = useCallback(() => {
-      const scroller = scrollerRef.current;
-      if (!scroller) return false;
-      const maxScroll = scroller.scrollHeight - scroller.clientHeight;
-      return scroller.scrollTop >= maxScroll - 4;
-    }, []);
-
-    useImperativeHandle(ref, () => ({
-      get scroller() {
-        return scrollerRef.current;
-      },
-      isAtEnd,
-    }));
+    const stackCompleteScrollRef = useRef(0);
 
     const calculateProgress = useCallback(
       (scrollTop: number, start: number, end: number) => {
@@ -108,6 +97,43 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       [],
     );
 
+    const getStackCompleteScrollTop = useCallback(() => {
+      const cards = cardsRef.current;
+      const scroller = scrollerRef.current;
+      if (!cards.length || !scroller) return 0;
+
+      const containerHeight = scroller.clientHeight;
+      if (containerHeight === 0) return 0;
+
+      const lastIndex = cards.length - 1;
+      const lastCardTop = cards[lastIndex].offsetTop;
+      const scaleEndPositionPx = parsePercentage(
+        scaleEndPosition,
+        containerHeight,
+      );
+
+      return Math.max(0, lastCardTop - scaleEndPositionPx);
+    }, [parsePercentage, scaleEndPosition]);
+
+    const isAtEnd = useCallback(() => {
+      const scroller = scrollerRef.current;
+      if (!scroller) return false;
+      return scroller.scrollTop >= stackCompleteScrollRef.current - 4;
+    }, []);
+
+    const getMaxScroll = useCallback(
+      () => stackCompleteScrollRef.current,
+      [],
+    );
+
+    useImperativeHandle(ref, () => ({
+      get scroller() {
+        return scrollerRef.current;
+      },
+      isAtEnd,
+      getMaxScroll,
+    }));
+
     const updateCardTransforms = useCallback(() => {
       const scroller = scrollerRef.current;
       if (!scroller || !cardsRef.current.length || isUpdatingRef.current) return;
@@ -124,15 +150,15 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
         containerHeight,
       );
 
-      const endElement = endRef.current;
-      const endElementTop = endElement?.offsetTop ?? 0;
+      const stackCompleteScrollTop = getStackCompleteScrollTop();
+      stackCompleteScrollRef.current = stackCompleteScrollTop;
 
       cardsRef.current.forEach((card, i) => {
         const cardTop = card.offsetTop;
         const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
         const triggerEnd = cardTop - scaleEndPositionPx;
         const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
-        const pinEnd = endElementTop - containerHeight / 2;
+        const pinEnd = stackCompleteScrollTop;
 
         const scaleProgress = calculateProgress(
           scrollTop,
@@ -218,6 +244,7 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       calculateProgress,
       parsePercentage,
       isAtEnd,
+      getStackCompleteScrollTop,
     ]);
 
     useLayoutEffect(() => {

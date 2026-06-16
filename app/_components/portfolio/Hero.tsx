@@ -29,18 +29,18 @@ export default function Hero({ onPageUnlock }: HeroProps) {
   const stackRef = useRef<ScrollStackHandle>(null);
   const touchLastYRef = useRef<number | null>(null);
   const stackAtEndRef = useRef(false);
+  const pageUnlockedRef = useRef(false);
   const [stackAtEnd, setStackAtEnd] = useState(false);
   const [pageUnlocked, setPageUnlocked] = useState(false);
 
-  const markStackAtEnd = useCallback(() => {
-    if (stackAtEndRef.current) return;
-    stackAtEndRef.current = true;
-    setStackAtEnd(true);
-  }, []);
-
-  const unlockPage = useCallback(
+  const completeStack = useCallback(
     (deltaY?: number) => {
-      if (pageUnlocked) return;
+      if (stackAtEndRef.current) return;
+      stackAtEndRef.current = true;
+      setStackAtEnd(true);
+
+      if (pageUnlockedRef.current) return;
+      pageUnlockedRef.current = true;
       setPageUnlocked(true);
       setPageScrollLocked(false);
       onPageUnlock?.();
@@ -54,7 +54,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
         });
       }
     },
-    [pageUnlocked, onPageUnlock],
+    [onPageUnlock],
   );
 
   useEffect(() => {
@@ -88,19 +88,14 @@ export default function Hero({ onPageUnlock }: HeroProps) {
     if (pageUnlocked) return;
 
     const handleWheel = (event: WheelEvent) => {
+      if (pageUnlockedRef.current) return;
+
       const scroller = stackRef.current?.scroller;
       if (!scroller) return;
 
-      if (stackAtEndRef.current) {
-        if (event.deltaY > 0) {
-          unlockPage(event.deltaY);
-        } else {
-          event.preventDefault();
-        }
-        return;
-      }
-
-      const maxScroll = scroller.scrollHeight - scroller.clientHeight;
+      const maxScroll =
+        stackRef.current?.getMaxScroll() ??
+        scroller.scrollHeight - scroller.clientHeight;
 
       event.preventDefault();
       scroller.scrollTop = Math.min(
@@ -109,7 +104,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       );
 
       if (stackRef.current?.isAtEnd()) {
-        markStackAtEnd();
+        completeStack(event.deltaY);
       }
     };
 
@@ -118,6 +113,8 @@ export default function Hero({ onPageUnlock }: HeroProps) {
     };
 
     const handleTouchMove = (event: TouchEvent) => {
+      if (pageUnlockedRef.current) return;
+
       const scroller = stackRef.current?.scroller;
       const touch = event.touches[0];
       if (!scroller || !touch || touchLastYRef.current === null) return;
@@ -125,16 +122,9 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       const deltaY = touchLastYRef.current - touch.clientY;
       touchLastYRef.current = touch.clientY;
 
-      if (stackAtEndRef.current) {
-        if (deltaY > 0) {
-          unlockPage(deltaY);
-        } else {
-          event.preventDefault();
-        }
-        return;
-      }
-
-      const maxScroll = scroller.scrollHeight - scroller.clientHeight;
+      const maxScroll =
+        stackRef.current?.getMaxScroll() ??
+        scroller.scrollHeight - scroller.clientHeight;
 
       event.preventDefault();
       scroller.scrollTop = Math.min(
@@ -143,7 +133,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       );
 
       if (stackRef.current?.isAtEnd()) {
-        markStackAtEnd();
+        completeStack(deltaY);
       }
     };
 
@@ -156,7 +146,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [pageUnlocked, unlockPage, markStackAtEnd]);
+  }, [pageUnlocked, completeStack]);
 
   return (
     <>
@@ -227,7 +217,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
                   baseScale={0.9}
                   itemScale={0.04}
                   blurAmount={1.5}
-                  onStackEnd={markStackAtEnd}
+                  onStackEnd={completeStack}
                 >
                   {DASHBOARDS.map((dashboard) => (
                     <ScrollStackItem key={dashboard.alt}>
