@@ -112,10 +112,12 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       const scroller = scrollerRef.current;
       if (!scroller || !cardsRef.current.length || isUpdatingRef.current) return;
 
+      const containerHeight = scroller.clientHeight;
+      if (containerHeight === 0) return;
+
       isUpdatingRef.current = true;
 
       const scrollTop = scroller.scrollTop;
-      const containerHeight = scroller.clientHeight;
       const stackPositionPx = parsePercentage(stackPosition, containerHeight);
       const scaleEndPositionPx = parsePercentage(
         scaleEndPosition,
@@ -196,6 +198,8 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
         }
       });
 
+      scroller.classList.add("is-initialized");
+
       if (!stackCompletedRef.current && isAtEnd()) {
         stackCompletedRef.current = true;
         onStackEnd?.();
@@ -227,14 +231,12 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       cardsRef.current = cards;
       const transformsCache = lastTransformsRef.current;
 
-      cards.forEach((card, i) => {
-        if (i < cards.length - 1) {
-          card.style.marginBottom = `${itemDistance}px`;
-        }
+      scroller.style.setProperty("--stack-item-distance", `${itemDistance}px`);
+
+      cards.forEach((card) => {
         card.style.willChange = "transform, filter";
         card.style.transformOrigin = "top center";
         card.style.backfaceVisibility = "hidden";
-        card.style.transform = "translateZ(0)";
       });
 
       const onScroll = () => updateCardTransforms();
@@ -242,6 +244,9 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       if (!frozen) {
         scroller.addEventListener("scroll", onScroll, { passive: true });
       }
+
+      const resizeObserver = new ResizeObserver(() => updateCardTransforms());
+      resizeObserver.observe(scroller);
 
       const tick = () => {
         updateCardTransforms();
@@ -253,6 +258,8 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
 
       return () => {
         scroller.removeEventListener("scroll", onScroll);
+        resizeObserver.disconnect();
+        scroller.classList.remove("is-initialized");
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
@@ -273,8 +280,19 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       <div
         ref={scrollerRef}
         className={`scroll-stack-scroller ${frozen ? "scroll-stack-scroller--locked" : ""} ${className}`.trim()}
+        style={
+          {
+            "--stack-position-pct": parseFloat(String(stackPosition)),
+            "--stack-base-scale": baseScale,
+          } as React.CSSProperties
+        }
       >
-        <div className="scroll-stack-inner">
+        <div
+          className="scroll-stack-inner"
+          style={
+            { "--stack-item-distance": `${itemDistance}px` } as React.CSSProperties
+          }
+        >
           {children}
           <div ref={endRef} className="scroll-stack-end" aria-hidden="true" />
         </div>

@@ -161,11 +161,10 @@ export default function Hero({ onPageUnlock }: HeroProps) {
   return (
     <>
       <section
-        className={`hero-section relative flex flex-col items-center overflow-hidden bg-black px-6 ${
-          pageUnlocked
-            ? "min-h-screen justify-center pt-20"
-            : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-16"
-        }`}
+        className={`hero-section relative flex flex-col items-center overflow-hidden bg-black px-6 ${pageUnlocked
+          ? "min-h-screen justify-center pt-20"
+          : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-16"
+          }`}
       >
         <div className="pointer-events-none absolute inset-0 z-0">
           <DotField
@@ -214,7 +213,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
             </a>
           </div>
 
-          <div className="hero-visual mt-auto w-full shrink-0 pb-6 md:pb-8">
+          <div className="hero-visual mt-6 w-full shrink-0 pb-4 md:mt-8 md:pb-6">
             <div className="hero-stack-stage relative mx-auto w-full max-w-3xl overflow-hidden">
               <div className="hero-stack-viewport h-[clamp(160px,calc(100svh-24rem),440px)] w-full overflow-hidden">
                 <ScrollStack
@@ -223,7 +222,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
                   frozen={stackAtEnd}
                   itemDistance={56}
                   itemStackDistance={16}
-                  stackPosition="60%"
+                  stackPosition="18%"
                   scaleEndPosition="8%"
                   baseScale={0.9}
                   itemScale={0.04}

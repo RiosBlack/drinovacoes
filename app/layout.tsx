@@ -12,7 +12,8 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
-  display: "swap",
+  display: "optional",
+  adjustFontFallback: true,
 });
 
 export default function RootLayout({

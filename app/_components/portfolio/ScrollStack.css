@@ -19,6 +19,15 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  container-type: size;
+}
+
+/* Estado inicial no scroll 0 — evita salto antes do JS medir o container */
+.hero-scroll-stack:not(.is-initialized) .scroll-stack-card:first-of-type {
+  transform: translate3d(0, calc(var(--stack-position-pct, 18) * 1cqh), 0)
+    scale(var(--stack-base-scale, 0.9));
+  transform-origin: top center;
+  backface-visibility: hidden;
 }
 
 .scroll-stack-scroller {
@@ -47,6 +56,11 @@
   position: relative;
   padding: 0 0 55vh;
   min-height: 100%;
+  --stack-item-distance: 100px;
+}
+
+.scroll-stack-inner > .scroll-stack-card:not(:last-of-type) {
+  margin-bottom: var(--stack-item-distance);
 }
 
 .scroll-stack-card {

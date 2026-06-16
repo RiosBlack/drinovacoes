@@ -20,12 +20,7 @@ export default function PortfolioAnimations() {
         .from(".hero-eyebrow", { y: 30, opacity: 0, duration: 0.8 })
         .from(".hero-title", { y: 60, opacity: 0, duration: 1 }, "-=0.4")
         .from(".hero-subtitle", { y: 30, opacity: 0, duration: 0.8 }, "-=0.5")
-        .from(".hero-cta", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
-        .from(
-          ".hero-scroll-stack .scroll-stack-card",
-          { y: 80, opacity: 0, scale: 0.95, duration: 1.2, stagger: 0.08 },
-          "-=0.3",
-        );
+        .from(".hero-cta", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
 
       gsap.to(".hero-title", {
         y: -40,
