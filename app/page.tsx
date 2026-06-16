@@ -22,6 +22,7 @@ import fotoTeste from "./public/teste.jpg";
 
 export default function Home() {
   const [projects, setProjects] = useState<ProjectCard[]>([]);
+  const [heroUnlocked, setHeroUnlocked] = useState(false);
   const router = useRouter();
 
   useSmoothScroll();
@@ -64,6 +65,12 @@ export default function Home() {
     }
   }, [projects]);
 
+  useEffect(() => {
+    if (!heroUnlocked) return;
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 150);
+    return () => clearTimeout(timer);
+  }, [heroUnlocked]);
+
   const handleProjectClick = (projectId: string) => {
     if (projectId) router.push(`/${projectId}`);
   };
@@ -72,16 +79,20 @@ export default function Home() {
     <main className="portfolio-page bg-black">
       <PortfolioAnimations />
       <Navbar />
-      <Hero />
-      <Highlights />
-      <ServicesSection />
-      <ProjectsSection
-        projects={projects}
-        onProjectClick={handleProjectClick}
-      />
-      <ProcessSection />
-      <ContactSection />
-      <Footer />
+      <Hero onPageUnlock={() => setHeroUnlocked(true)} />
+      {heroUnlocked && (
+        <>
+          <Highlights />
+          <ServicesSection />
+          <ProjectsSection
+            projects={projects}
+            onProjectClick={handleProjectClick}
+          />
+          <ProcessSection />
+          <ContactSection />
+          <Footer />
+        </>
+      )}
     </main>
   );
 }

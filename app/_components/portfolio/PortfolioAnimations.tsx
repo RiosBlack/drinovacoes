@@ -21,20 +21,11 @@ export default function PortfolioAnimations() {
         .from(".hero-title", { y: 60, opacity: 0, duration: 1 }, "-=0.4")
         .from(".hero-subtitle", { y: 30, opacity: 0, duration: 0.8 }, "-=0.5")
         .from(".hero-cta", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
-        .from(".hero-device", { y: 80, opacity: 0, scale: 0.95, duration: 1.2 }, "-=0.3");
-
-      // Hero parallax on scroll
-      gsap.to(".hero-visual", {
-        y: -80,
-        opacity: 0.3,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero-section",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+        .from(
+          ".hero-scroll-stack .scroll-stack-card",
+          { y: 80, opacity: 0, scale: 0.95, duration: 1.2, stagger: 0.08 },
+          "-=0.3",
+        );
 
       gsap.to(".hero-title", {
         y: -40,
