@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { Comfortaa } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "DR Inovações",
-  description: "Transformando ideias em tecnologia",
+  title: "DR Inovações — Desenvolvimento de Software",
+  description:
+    "Empresa de desenvolvimento de software. Sistemas, sites, e-commerce e automações com IA.",
 };
 
-const comfortaa = Comfortaa({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-comfortaa",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -20,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${comfortaa.variable} dark antialiased`}>
-        {children}
-      </body>
+      <body className={`${inter.variable} antialiased`}>{children}</body>
     </html>
   );
 }

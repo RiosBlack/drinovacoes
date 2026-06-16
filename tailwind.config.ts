@@ -77,7 +77,17 @@ const config: Config = {
         gradient: "gradient 8s linear infinite",
       },
       fontFamily: {
-        comfortaa: ["Comfortaa", "cursive"],
+        sans: [
+          "var(--font-inter)",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "SF Pro Text",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
       borderRadius: {
         lg: "var(--radius)",
