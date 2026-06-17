@@ -1,4 +1,4 @@
-import { getPortifolioById } from "@/app/services/notion"; // ajuste o caminho conforme necessário
+import { getPortifolioById } from "@/app/services/portfolio";
 import { notFound } from "next/navigation";
 import HeaderMenu from "../_components/home/headerMenu";
 

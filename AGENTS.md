@@ -10,7 +10,6 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 - **Linguagem:** TypeScript
 - **Estilo:** Tailwind CSS
 - **Animações:** GSAP + ScrollTrigger + Lenis
-- **CMS:** Notion API (portfólio de projetos)
 - **Package manager:** pnpm
 
 ## Estrutura
@@ -19,15 +18,12 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 app/
   _components/portfolio/   # Componentes do novo portfólio
   hooks/useSmoothScroll.ts # Lenis + GSAP ticker
-  services/notion.ts       # Integração Notion
+  data/portfolio.ts        # Dados estáticos do portfólio
+  services/portfolio.ts    # Acesso aos projetos
   page.tsx                 # Home
   projetos/page.tsx        # Lista de projetos
   [id]/page.tsx            # Detalhe do projeto
 ```
-
-## Variáveis de ambiente
-
-- `NOTION_API_KEY` — chave da API Notion para buscar projetos
 
 ## Changelog
 

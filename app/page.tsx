@@ -16,8 +16,8 @@ import ContactSection from "./_components/portfolio/ContactSection";
 import Footer from "./_components/portfolio/Footer";
 import PortfolioAnimations from "./_components/portfolio/PortfolioAnimations";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
-import { getPortifolio } from "./services/notion";
-import { PortfolioItem } from "./types/notion";
+import { getPortifolio } from "./services/portfolio";
+import { PortfolioItem } from "./types/portfolio";
 import fotoTeste from "./public/teste.jpg";
 
 export default function Home() {

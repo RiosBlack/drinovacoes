@@ -7,8 +7,8 @@ import Link from "next/link";
 import Navbar from "../_components/portfolio/Navbar";
 import Footer from "../_components/portfolio/Footer";
 import { useSmoothScroll } from "../hooks/useSmoothScroll";
-import { getPortifolio } from "../services/notion";
-import { PortfolioItem } from "../types/notion";
+import { getPortifolio } from "../services/portfolio";
+import { PortfolioItem } from "../types/portfolio";
 import fotoTeste from "../public/teste.jpg";
 
 export default function ProjetosPage() {
