@@ -77,8 +77,9 @@ const config: Config = {
         gradient: "gradient 8s linear infinite",
       },
       fontFamily: {
+        bitcount: ['"Bitcount Single"', "monospace"],
         sans: [
-          "var(--font-inter)",
+          "var(--font-raleway)",
           "-apple-system",
           "BlinkMacSystemFont",
           "SF Pro Text",

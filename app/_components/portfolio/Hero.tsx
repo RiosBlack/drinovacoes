@@ -14,6 +14,7 @@ import {
 import dash1 from "../../public/dash1.webp";
 import dash2 from "../../public/dash2.webp";
 import dash3 from "../../public/dash3.webp";
+import TextType from "./TextType";
 
 const DASHBOARDS = [
   { src: dash1, alt: "Dashboard do projeto 1" },
@@ -153,7 +154,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       <section
         className={`hero-section relative flex flex-col items-center overflow-hidden bg-black px-6 ${pageUnlocked
           ? "min-h-screen justify-center pt-20"
-          : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-24"
+          : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-32"
           }`}
       >
         <div className="pointer-events-none absolute inset-0 z-0">
@@ -173,14 +174,22 @@ export default function Hero({ onPageUnlock }: HeroProps) {
         <div className="hero-glow pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_55%)]" />
 
         <div className="relative z-10 flex h-full min-h-0 w-full flex-1 flex-col items-center">
-          <p className="hero-eyebrow mb-4 shrink-0 text-sm font-medium tracking-wide text-[#86868b]">
-            DR Inovações
-          </p>
 
           <h1 className="hero-title max-w-4xl shrink-0 text-center text-[clamp(2.25rem,7vw,4.5rem)] font-semibold leading-[1.05] tracking-tight text-[#f5f5f7]">
             Transformamos ideias
             <br />
-            <span className="text-[#E8C547]">em tecnologia.</span>
+            <TextType
+              as="span"
+              text="em tecnologia."
+              typingSpeed={75}
+              initialDelay={600}
+              loop={false}
+              showCursor
+              cursorCharacter="|"
+              className="font-bitcount text-[#E8C547]"
+              textColors={["#E8C547"]}
+              cursorClassName="text-[#E8C547]"
+            />
           </h1>
 
           <p className="hero-subtitle mt-4 max-w-xl shrink-0 text-center text-base text-[#86868b] md:mt-6 md:text-xl">
