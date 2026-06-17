@@ -153,7 +153,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       <section
         className={`hero-section relative flex flex-col items-center overflow-hidden bg-black px-6 ${pageUnlocked
           ? "min-h-screen justify-center pt-20"
-          : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-16"
+          : "fixed inset-0 z-30 h-svh justify-start pt-14 md:pt-24"
           }`}
       >
         <div className="pointer-events-none absolute inset-0 z-0">
@@ -177,10 +177,10 @@ export default function Hero({ onPageUnlock }: HeroProps) {
             DR Inovações
           </p>
 
-          <h1 className="hero-title max-w-4xl shrink-0 text-center text-[clamp(2.25rem,7vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-[#f5f5f7]">
-            Software que
+          <h1 className="hero-title max-w-4xl shrink-0 text-center text-[clamp(2.25rem,7vw,4.5rem)] font-semibold leading-[1.05] tracking-tight text-[#f5f5f7]">
+            Transformamos ideias
             <br />
-            <span className="text-[#E8C547]">transforma ideias.</span>
+            <span className="text-[#E8C547]">em tecnologia.</span>
           </h1>
 
           <p className="hero-subtitle mt-4 max-w-xl shrink-0 text-center text-base text-[#86868b] md:mt-6 md:text-xl">
