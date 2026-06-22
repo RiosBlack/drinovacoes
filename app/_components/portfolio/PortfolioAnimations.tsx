@@ -1,20 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PortfolioAnimations() {
-  const initialized = useRef(false);
-
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-
     const ctx = gsap.context(() => {
-      // Hero entrance
       const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
       heroTl
         .from(".hero-eyebrow", { y: 30, opacity: 0, duration: 0.8 })
@@ -33,7 +27,6 @@ export default function PortfolioAnimations() {
         },
       });
 
-      // Navbar blur on scroll
       ScrollTrigger.create({
         trigger: ".hero-section",
         start: "top top",
@@ -49,52 +42,6 @@ export default function PortfolioAnimations() {
         },
       });
 
-      // Highlights pinned scrub
-      const panels = gsap.utils.toArray<HTMLElement>(".highlight-panel");
-      const tabs = gsap.utils.toArray<HTMLElement>(".highlight-tab");
-
-      if (panels.length > 0) {
-        gsap.set(panels[0], { opacity: 1, zIndex: 1, y: 0 });
-        gsap.set(panels.slice(1), { opacity: 0, zIndex: 0, y: 30 });
-        tabs[0]?.classList.add("highlight-tab--active");
-
-        const highlightTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".highlights-section",
-            start: "top top",
-            end: `+=${panels.length * 600}`,
-            pin: ".highlights-pin",
-            scrub: 0.8,
-            anticipatePin: 1,
-          },
-        });
-
-        panels.forEach((panel, i) => {
-          if (i === 0) return;
-          highlightTl
-            .to(
-              panels[i - 1],
-              { opacity: 0, y: -30, duration: 0.5, ease: "power2.inOut" },
-              i,
-            )
-            .to(
-              panel,
-              { opacity: 1, y: 0, duration: 0.5, ease: "power2.inOut" },
-              i,
-            )
-            .call(
-              () => {
-                tabs.forEach((tab, ti) => {
-                  tab.classList.toggle("highlight-tab--active", ti === i);
-                });
-              },
-              undefined,
-              i,
-            );
-        });
-      }
-
-      // Service headlines scrub
       gsap.utils.toArray<HTMLElement>(".service-headline").forEach((el) => {
         gsap.fromTo(
           el,
@@ -113,7 +60,6 @@ export default function PortfolioAnimations() {
         );
       });
 
-      // Reveal text batch
       ScrollTrigger.batch(".reveal-text", {
         start: "top 90%",
         onEnter: (batch) => {
@@ -139,7 +85,6 @@ export default function PortfolioAnimations() {
 
       gsap.set(".reveal-text", { opacity: 0, y: 30 });
 
-      // Project cards
       ScrollTrigger.batch(".project-card", {
         start: "top 92%",
         onEnter: (batch) => {
@@ -158,7 +103,6 @@ export default function PortfolioAnimations() {
         },
       });
 
-      // Process steps
       ScrollTrigger.batch(".process-step", {
         start: "top 88%",
         onEnter: (batch) => {
@@ -177,7 +121,6 @@ export default function PortfolioAnimations() {
         },
       });
 
-      // Contact headline
       gsap.fromTo(
         ".contact-headline",
         { opacity: 0.15, scale: 0.95 },

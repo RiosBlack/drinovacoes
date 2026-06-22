@@ -14,10 +14,15 @@ export type ProjectCard = {
 
 type Props = {
   projects: ProjectCard[];
+  loading?: boolean;
   onProjectClick: (id: string) => void;
 };
 
-export default function ProjectsSection({ projects, onProjectClick }: Props) {
+export default function ProjectsSection({
+  projects,
+  loading = false,
+  onProjectClick,
+}: Props) {
   const featured = projects.slice(0, 3);
 
   return (
@@ -39,13 +44,15 @@ export default function ProjectsSection({ projects, onProjectClick }: Props) {
               className="project-card group overflow-hidden rounded-2xl bg-white text-left shadow-sm transition-shadow hover:shadow-lg"
             >
               <div className="project-card-image relative aspect-[4/3] overflow-hidden bg-[#e8e8ed]">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                ) : null}
               </div>
               <div className="p-6">
                 <p className="text-xs font-medium text-[#86868b]">
@@ -77,9 +84,15 @@ export default function ProjectsSection({ projects, onProjectClick }: Props) {
           </div>
         )}
 
-        {projects.length === 0 && (
+        {loading && (
           <p className="mt-12 text-center text-[#86868b]">
             Carregando projetos...
+          </p>
+        )}
+
+        {!loading && projects.length === 0 && (
+          <p className="mt-12 text-center text-[#86868b]">
+            Nenhum projeto publicado ainda.
           </p>
         )}
       </div>

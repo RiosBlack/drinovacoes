@@ -7,12 +7,11 @@ import Link from "next/link";
 import Navbar from "../_components/portfolio/Navbar";
 import Footer from "../_components/portfolio/Footer";
 import { useSmoothScroll } from "../hooks/useSmoothScroll";
-import { getPortifolio } from "../services/portfolio";
-import { PortfolioItem } from "../types/portfolio";
-import fotoTeste from "../public/teste.jpg";
+import { getProjects } from "../services/portfolio";
+import type { Project } from "../types/portfolio";
 
 export default function ProjetosPage() {
-  const [projects, setProjects] = useState<PortfolioItem[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -21,7 +20,7 @@ export default function ProjetosPage() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const data = await getPortifolio();
+        const data = await getProjects();
         setProjects(data);
       } catch {
         setProjects([]);
@@ -63,52 +62,40 @@ export default function ProjetosPage() {
         )}
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => {
-            const id = project.Index || "";
-            const technologies = [
-              project.Tech1,
-              project.Tech2,
-              project.Tech3,
-              project.Tech4,
-              project.Tech5,
-              project.Tech6,
-            ]
-              .filter(Boolean)
-              .join(" · ");
-
-            return (
-              <button
-                key={id}
-                type="button"
-                onClick={() => id && router.push(`/${id}`)}
-                className="group overflow-hidden rounded-2xl bg-white text-left shadow-sm transition-shadow hover:shadow-lg"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#e8e8ed]">
+          {projects.map((project) => (
+            <button
+              key={project.id}
+              type="button"
+              onClick={() => router.push(`/${project.slug}`)}
+              className="group overflow-hidden rounded-2xl bg-white text-left shadow-sm transition-shadow hover:shadow-lg"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#e8e8ed]">
+                {project.coverImage && (
                   <Image
-                    src={project.Miniatura || fotoTeste}
-                    alt={project.Projeto || "Projeto"}
+                    src={project.coverImage}
+                    alt={project.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                </div>
-                <div className="p-6">
-                  <p className="text-xs text-[#86868b]">{project.data}</p>
-                  <h2 className="mt-1 text-lg font-semibold text-[#1d1d1f]">
-                    {project.Projeto}
-                  </h2>
-                  <p className="mt-2 line-clamp-2 text-sm text-[#86868b]">
-                    {project.DescricaoBreve || project.Descricoes}
+                )}
+              </div>
+              <div className="p-6">
+                <p className="text-xs text-[#86868b]">{project.publishedAt}</p>
+                <h2 className="mt-1 text-lg font-semibold text-[#1d1d1f]">
+                  {project.title}
+                </h2>
+                <p className="mt-2 line-clamp-2 text-sm text-[#86868b]">
+                  {project.shortDescription}
+                </p>
+                {project.technologies.length > 0 && (
+                  <p className="mt-3 text-xs text-[#C9A227]">
+                    {project.technologies.join(" · ")}
                   </p>
-                  {technologies && (
-                    <p className="mt-3 text-xs text-[#C9A227]">
-                      {technologies}
-                    </p>
-                  )}
-                </div>
-              </button>
-            );
-          })}
+                )}
+              </div>
+            </button>
+          ))}
         </div>
       </section>
 

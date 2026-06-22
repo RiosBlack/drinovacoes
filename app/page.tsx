@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { StaticImageData } from "next/image";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./_components/portfolio/Navbar";
 import Hero from "./_components/portfolio/Hero";
@@ -16,54 +15,45 @@ import ContactSection from "./_components/portfolio/ContactSection";
 import Footer from "./_components/portfolio/Footer";
 import PortfolioAnimations from "./_components/portfolio/PortfolioAnimations";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
-import { getPortifolio } from "./services/portfolio";
-import { PortfolioItem } from "./types/portfolio";
-import fotoTeste from "./public/teste.jpg";
+import { getCategories, getProjects } from "./services/portfolio";
+import type { Project, ProjectCategory } from "./types/portfolio";
 
 export default function Home() {
-  const [projects, setProjects] = useState<ProjectCard[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [categories, setCategories] = useState<ProjectCategory[]>([]);
+  const [loading, setLoading] = useState(true);
   const [heroUnlocked, setHeroUnlocked] = useState(false);
   const router = useRouter();
 
   useSmoothScroll();
 
   useEffect(() => {
-    async function fetchProjects() {
+    async function fetchData() {
       try {
-        const portfolioData = await getPortifolio();
-        const mapped = portfolioData.map((item: PortfolioItem) => ({
-          id: item.Index || "",
-          title: item.Projeto || "Projeto sem título",
-          description: item.DescricaoBreve || "Projeto personalizado",
-          technologies:
-            [
-              item.Tech1,
-              item.Tech2,
-              item.Tech3,
-              item.Tech4,
-              item.Tech5,
-              item.Tech6,
-            ]
-              .filter(Boolean)
-              .join(" · ") || "Tecnologias diversas",
-          date: item.data || "",
-          image: (item.Miniatura as string | StaticImageData) || fotoTeste,
-        }));
-        setProjects(mapped);
-      } catch {
+        const [projectsData, categoriesData] = await Promise.all([
+          getProjects(),
+          getCategories(),
+        ]);
+        setProjects(projectsData);
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Erro ao carregar dados do Sanity:", error);
         setProjects([]);
+        setCategories([]);
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchProjects();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    if (projects.length > 0) {
+    if (projects.length > 0 || categories.length > 0) {
       const timer = setTimeout(() => ScrollTrigger.refresh(), 300);
       return () => clearTimeout(timer);
     }
-  }, [projects]);
+  }, [projects, categories]);
 
   useEffect(() => {
     if (!heroUnlocked) return;
@@ -71,8 +61,17 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [heroUnlocked]);
 
-  const handleProjectClick = (projectId: string) => {
-    if (projectId) router.push(`/${projectId}`);
+  const projectCards: ProjectCard[] = projects.map((project) => ({
+    id: project.slug,
+    title: project.title,
+    description: project.shortDescription,
+    technologies: project.technologies.join(" · ") || "Tecnologias diversas",
+    date: project.publishedAt,
+    image: project.coverImage,
+  }));
+
+  const handleProjectClick = (slug: string) => {
+    if (slug) router.push(`/${slug}`);
   };
 
   return (
@@ -80,19 +79,16 @@ export default function Home() {
       <PortfolioAnimations />
       <Navbar />
       <Hero onPageUnlock={() => setHeroUnlocked(true)} />
-      {heroUnlocked && (
-        <>
-          <Highlights />
-          <ServicesSection />
-          <ProjectsSection
-            projects={projects}
-            onProjectClick={handleProjectClick}
-          />
-          <ProcessSection />
-          <ContactSection />
-          <Footer />
-        </>
-      )}
+      <Highlights categories={categories} projects={projects} />
+      <ServicesSection />
+      <ProjectsSection
+        projects={projectCards}
+        loading={loading}
+        onProjectClick={handleProjectClick}
+      />
+      <ProcessSection />
+      <ContactSection />
+      <Footer />
     </main>
   );
 }

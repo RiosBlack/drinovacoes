@@ -46,14 +46,25 @@ export default function Hero({ onPageUnlock }: HeroProps) {
       setPageScrollLocked(false);
       onPageUnlock?.();
 
-      if (deltaY && deltaY > 0) {
-        requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (deltaY && deltaY > 0) {
           const lenis = getLenis();
           if (lenis) {
             lenis.scrollTo(lenis.scroll + deltaY, { immediate: false });
           }
-        });
-      }
+          return;
+        }
+
+        const projetos = document.querySelector("#projetos");
+        if (projetos) {
+          const lenis = getLenis();
+          if (lenis) {
+            lenis.scrollTo(projetos, { offset: -80 });
+          } else {
+            projetos.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      });
     },
     [onPageUnlock],
   );
@@ -198,12 +209,13 @@ export default function Hero({ onPageUnlock }: HeroProps) {
           </p>
 
           <div className="hero-cta mt-6 flex shrink-0 flex-wrap items-center justify-center gap-4 md:mt-10">
-            <a
-              href="#projetos"
+            <button
+              type="button"
+              onClick={() => completeStack()}
               className="rounded-full bg-[#C9A227] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#B8922A]"
             >
               Ver projetos
-            </a>
+            </button>
             <a
               href="#contato"
               className="text-sm font-medium text-[#E8C547] transition-opacity hover:opacity-80"
