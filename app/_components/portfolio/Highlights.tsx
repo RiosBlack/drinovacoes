@@ -63,18 +63,17 @@ export default function Highlights({ categories, projects }: Props) {
         </h2>
 
         <div className="mt-12 flex flex-col gap-16 lg:flex-row lg:gap-20">
-          <div className="highlights-nav flex shrink-0 flex-row gap-2 overflow-x-auto lg:w-48 lg:flex-col lg:gap-1">
+          <div className="highlights-nav flex shrink-0 flex-row gap-2 overflow-x-auto overflow-y-visible lg:w-48 lg:flex-col lg:gap-1 lg:overflow-visible">
             {categories.map((category, index) => (
-              <div key={category.id} className="flex flex-col">
+              <div key={category.id} className="flex flex-col overflow-visible justify-center items-center">
                 <button
                   type="button"
                   onClick={() => selectCategory(index)}
                   aria-pressed={activeIndex === index}
-                  className={`highlight-tab whitespace-nowrap rounded-full px-4 py-2 text-left text-sm font-medium transition-colors lg:rounded-lg ${
-                    activeIndex === index
-                      ? "highlight-tab--active"
-                      : "text-[#86868b]"
-                  }`}
+                  className={`highlight-tab whitespace-nowrap rounded-full px-4 py-2 text-left text-sm font-medium transition-colors lg:rounded-lg mb-1 w-full ${activeIndex === index
+                    ? "highlight-tab--active"
+                    : "text-[#86868b]"
+                    }`}
                 >
                   {category.title}
                 </button>
