@@ -121,7 +121,17 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
     const isAtEnd = useCallback(() => {
       const scroller = scrollerRef.current;
       if (!scroller) return false;
-      return scroller.scrollTop >= stackCompleteScrollRef.current - 4;
+
+      const maxNativeScroll = Math.max(
+        0,
+        scroller.scrollHeight - scroller.clientHeight,
+      );
+      const targetScroll = Math.min(
+        stackCompleteScrollRef.current,
+        maxNativeScroll,
+      );
+
+      return scroller.scrollTop >= targetScroll - 4;
     }, []);
 
     const getMaxScroll = useCallback(
@@ -155,6 +165,22 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
 
       const stackCompleteScrollTop = getStackCompleteScrollTop();
       stackCompleteScrollRef.current = stackCompleteScrollTop;
+
+      const endEl = endRef.current;
+      if (endEl && stackCompleteScrollTop > 0) {
+        const inner = endEl.parentElement;
+        if (inner) {
+          const innerHeightWithoutEnd = inner.scrollHeight - endEl.offsetHeight;
+          const minEndHeight = Math.max(
+            1,
+            stackCompleteScrollTop + containerHeight - innerHeightWithoutEnd,
+          );
+
+          if (endEl.offsetHeight < minEndHeight - 0.5) {
+            endEl.style.height = `${minEndHeight}px`;
+          }
+        }
+      }
 
       cardsRef.current.forEach((card, i) => {
         const cardTop = card.offsetTop;

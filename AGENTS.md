@@ -39,6 +39,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-06-23 — Scroll do hero travado no mobile](./changelogs/2026-06-23-mobile-hero-scroll-unlock.md)
 - [2026-06-23 — Sanity client fallback para build na Vercel](./changelogs/2026-06-23-sanity-client-build-fallback.md)
 - [2026-06-23 — Layout de detalhe de projetos](./changelogs/2026-06-23-project-detail-layout.md)
 - [2026-06-23 — Botão flutuante do WhatsApp](./changelogs/2026-06-23-whatsapp-float-button.md)
