@@ -185,46 +185,46 @@ export default function Hero({ onPageUnlock }: HeroProps) {
         <div className="hero-glow pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_55%)]" />
 
         <div className="relative z-10 flex h-full min-h-0 w-full flex-1 flex-col items-center">
+          <div className="hero-copy flex w-full max-w-4xl shrink-0 flex-col items-center gap-4 text-center md:gap-6">
+            <h1 className="hero-title text-[clamp(2.25rem,7vw,4.5rem)] font-semibold tracking-tight text-[#f5f5f7]">
+              <span className="block leading-[1.05]">Transformamos ideias</span>
+              <TextType
+                as="span"
+                text="em tecnologia."
+                typingSpeed={75}
+                initialDelay={600}
+                loop={false}
+                showCursor
+                cursorCharacter="|"
+                className="font-bitcount mt-2 block leading-[1.1] text-[#E8C547] md:mt-3"
+                textColors={["#E8C547"]}
+                cursorClassName="text-[#E8C547]"
+              />
+            </h1>
 
-          <h1 className="hero-title max-w-4xl shrink-0 text-center text-[clamp(2.25rem,7vw,4.5rem)] font-semibold leading-[1.05] tracking-tight text-[#f5f5f7]">
-            Transformamos ideias
-            <br />
-            <TextType
-              as="span"
-              text="em tecnologia."
-              typingSpeed={75}
-              initialDelay={600}
-              loop={false}
-              showCursor
-              cursorCharacter="|"
-              className="font-bitcount text-[#E8C547]"
-              textColors={["#E8C547"]}
-              cursorClassName="text-[#E8C547]"
-            />
-          </h1>
+            <p className="hero-subtitle max-w-xl text-base text-[#86868b] md:text-xl">
+              Desenvolvemos sistemas, sites e automações com design refinado e
+              engenharia de ponta.
+            </p>
 
-          <p className="hero-subtitle mt-4 max-w-xl shrink-0 text-center text-base text-[#86868b] md:mt-6 md:text-xl">
-            Desenvolvemos sistemas, sites e automações com design refinado e
-            engenharia de ponta.
-          </p>
-
-          <div className="hero-cta mt-6 flex shrink-0 flex-wrap items-center justify-center gap-4 md:mt-10">
-            <button
-              type="button"
-              onClick={() => completeStack()}
-              className="rounded-full bg-[#C9A227] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#B8922A]"
-            >
-              Ver projetos
-            </button>
-            <a
-              href="#contato"
-              className="text-sm font-medium text-[#E8C547] transition-opacity hover:opacity-80"
-            >
-              Iniciar um projeto →
-            </a>
+            <div className="hero-cta flex flex-wrap items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => completeStack()}
+                className="rounded-full bg-[#C9A227] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#B8922A]"
+              >
+                Ver projetos
+              </button>
+              <a
+                href="#contato"
+                className="text-sm font-medium text-[#E8C547] transition-opacity hover:opacity-80"
+              >
+                Iniciar um projeto →
+              </a>
+            </div>
           </div>
 
-          <div className="hero-visual mt-6 w-full shrink-0 pb-4 md:mt-8 md:pb-6">
+          <div className="hero-visual mt-4 w-full shrink-0 pb-4 md:mt-6 md:pb-6">
             <div className="hero-stack-stage relative mx-auto w-full max-w-3xl overflow-hidden">
               <div className="hero-stack-viewport h-[clamp(160px,calc(100svh-24rem),440px)] w-full overflow-hidden">
                 <ScrollStack

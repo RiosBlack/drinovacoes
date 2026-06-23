@@ -19,6 +19,8 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  contain: paint;
+  isolation: isolate;
   container-type: size;
 }
 
@@ -67,7 +69,6 @@
   transform-origin: top center;
   will-change: transform, filter;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
   position: relative;
   width: 100%;
   box-sizing: border-box;

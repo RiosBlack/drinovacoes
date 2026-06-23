@@ -16,14 +16,16 @@ export default function PortfolioAnimations() {
         .from(".hero-subtitle", { y: 30, opacity: 0, duration: 0.8 }, "-=0.5")
         .from(".hero-cta", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4");
 
-      gsap.to(".hero-title", {
-        y: -40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero-section",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
+      ScrollTrigger.create({
+        trigger: ".hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const y =
+            document.body.dataset.scrollLocked === "true" ? 0 : -40 * self.progress;
+          gsap.set(".hero-title", { y });
         },
       });
 

@@ -70,11 +70,14 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
   ) {
     const scrollerRef = useRef<HTMLDivElement>(null);
     const endRef = useRef<HTMLDivElement>(null);
+    const frozenRef = useRef(frozen);
     const stackCompletedRef = useRef(false);
     const animationFrameRef = useRef<number>();
     const cardsRef = useRef<HTMLElement[]>([]);
     const lastTransformsRef = useRef<Map<number, CardTransform>>(new Map());
     const isUpdatingRef = useRef(false);
+
+    frozenRef.current = frozen;
 
     const stackCompleteScrollRef = useRef(0);
 
@@ -247,6 +250,24 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       getStackCompleteScrollTop,
     ]);
 
+    const lockStackAtEnd = useCallback(() => {
+      const scroller = scrollerRef.current;
+      if (!scroller || !cardsRef.current.length) return;
+
+      const endScrollTop = getStackCompleteScrollTop();
+      stackCompleteScrollRef.current = endScrollTop;
+      if (endScrollTop > 0) {
+        scroller.scrollTop = endScrollTop;
+      }
+
+      updateCardTransforms();
+    }, [updateCardTransforms, getStackCompleteScrollTop]);
+
+    useLayoutEffect(() => {
+      if (!frozen) return;
+      lockStackAtEnd();
+    }, [frozen, lockStackAtEnd]);
+
     useLayoutEffect(() => {
       const scroller = scrollerRef.current;
       if (!scroller) return;
@@ -266,17 +287,27 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
         card.style.backfaceVisibility = "hidden";
       });
 
-      const onScroll = () => updateCardTransforms();
+      const onScroll = () => {
+        if (!frozenRef.current) {
+          updateCardTransforms();
+        }
+      };
 
-      if (!frozen) {
-        scroller.addEventListener("scroll", onScroll, { passive: true });
-      }
+      scroller.addEventListener("scroll", onScroll, { passive: true });
 
-      const resizeObserver = new ResizeObserver(() => updateCardTransforms());
+      const resizeObserver = new ResizeObserver(() => {
+        if (frozenRef.current) {
+          lockStackAtEnd();
+          return;
+        }
+        updateCardTransforms();
+      });
       resizeObserver.observe(scroller);
 
       const tick = () => {
-        updateCardTransforms();
+        if (!frozenRef.current) {
+          updateCardTransforms();
+        }
         animationFrameRef.current = requestAnimationFrame(tick);
       };
 
@@ -286,11 +317,11 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       return () => {
         scroller.removeEventListener("scroll", onScroll);
         resizeObserver.disconnect();
-        scroller.classList.remove("is-initialized");
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
-        if (!frozen) {
+        if (!frozenRef.current) {
+          scroller.classList.remove("is-initialized");
           stackCompletedRef.current = false;
           cardsRef.current = [];
           transformsCache.clear();
@@ -299,8 +330,8 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       };
     }, [
       itemDistance,
-      frozen,
       updateCardTransforms,
+      lockStackAtEnd,
     ]);
 
     return (
