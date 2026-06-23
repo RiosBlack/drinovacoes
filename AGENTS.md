@@ -17,8 +17,9 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 
 ```
 app/
-  _components/portfolio/   # Componentes do novo portfólio
-  hooks/useSmoothScroll.ts # Lenis + GSAP ticker
+  _components/portfolio/          # Componentes do novo portfólio
+  _components/portfolio/project-detail/  # Layout de detalhe de projeto
+  hooks/useSmoothScroll.ts        # Lenis + GSAP ticker
   data/portfolio.ts        # Dados estáticos do portfólio
   services/portfolio.ts    # Acesso aos projetos
   page.tsx                 # Home
@@ -38,6 +39,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-06-23 — Layout de detalhe de projetos](./changelogs/2026-06-23-project-detail-layout.md)
 - [2026-06-23 — Botão flutuante do WhatsApp](./changelogs/2026-06-23-whatsapp-float-button.md)
 - [2026-06-23 — Consolidar assets em public/ na raiz](./changelogs/2026-06-23-consolidate-public-folder.md)
 - [2026-06-23 — Linha vertical no vídeo dos serviços](./changelogs/2026-06-23-services-video-seam-fix.md)

@@ -41,7 +41,7 @@ export default function ButtonVerAoVivo({ link }: ProjectLinkButtonProps) {
           "Abrindo..."
         ) : (
           <>
-            Ver ao vivo
+            Link do projeto
             <MoveUpRight className="ml-2 h-6 w-6" />
           </>
         )}

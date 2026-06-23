@@ -4,6 +4,11 @@
 
 @layer base {
   :root {
+    --project-bg: #000000;
+    --project-text: #f5f5f7;
+    --project-muted: #86868b;
+    --project-cta: #c9a227;
+    --project-surface: #1d1d1f;
     --background: 0 0% 100%;
     --foreground: 0 0% 11%;
     --card: 0 0% 100%;
@@ -93,6 +98,18 @@
 
   .highlight-tab:not(.highlight-tab--active):hover {
     @apply text-[#1d1d1f];
+  }
+
+  .project-detail-nav {
+    @apply transition-all duration-300;
+    background: transparent;
+  }
+
+  .project-detail-nav--scrolled {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 }
 
