@@ -43,6 +43,7 @@ function ServiceBlock({
   index: number;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const blockBg = index % 2 === 0 ? "#000000" : "#1d1d1f";
 
   return (
     <div
@@ -57,7 +58,7 @@ function ServiceBlock({
             key={`video-${index}`}
             className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-1/2 overflow-hidden"
             initial={{ opacity: 0, x: "-12%" }}
-            animate={{ opacity: 0.5, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-12%" }}
             transition={VIDEO_TRANSITION}
           >
@@ -67,7 +68,13 @@ function ServiceBlock({
               muted
               loop
               playsInline
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-cover object-center opacity-50"
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `linear-gradient(to right, ${blockBg} 0%, transparent 75%)`,
+              }}
             />
           </motion.div>
         )}
