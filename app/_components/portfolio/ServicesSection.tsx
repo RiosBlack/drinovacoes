@@ -12,6 +12,10 @@ const SERVICE_VIDEOS = [
 
 const VIDEO_TRANSITION = { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const };
 
+function serviceVideoFade(blockBg: string) {
+  return `linear-gradient(to right, ${blockBg} 0%, ${blockBg} 12%, transparent 72%)`;
+}
+
 const services = [
   {
     eyebrow: "Sistemas",
@@ -56,10 +60,11 @@ function ServiceBlock({
         {isHovered && (
           <motion.div
             key={`video-${index}`}
-            className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-1/2 overflow-hidden"
-            initial={{ opacity: 0, x: "-12%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-12%" }}
+            className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-[58%] overflow-hidden [backface-visibility:hidden] [transform:translateZ(0)]"
+            style={{ backgroundColor: blockBg }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={VIDEO_TRANSITION}
           >
             <video
@@ -68,13 +73,12 @@ function ServiceBlock({
               muted
               loop
               playsInline
-              className="h-full w-full object-cover object-center opacity-50"
+              preload="auto"
+              className="absolute inset-0 h-full w-full scale-[1.04] object-cover object-center opacity-50"
             />
             <div
               className="pointer-events-none absolute inset-0"
-              style={{
-                background: `linear-gradient(to right, ${blockBg} 0%, transparent 75%)`,
-              }}
+              style={{ background: serviceVideoFade(blockBg) }}
             />
           </motion.div>
         )}
