@@ -81,11 +81,14 @@ const DotField = memo(
     );
 
     useEffect(() => {
-      const canvas = canvasRef.current;
+      const canvasEl = canvasRef.current;
       const glowEl = glowRef.current;
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d", { alpha: true });
+      if (!canvasEl) return;
+      const ctx = canvasEl.getContext("2d", { alpha: true });
       if (!ctx) return;
+
+      const canvas: HTMLCanvasElement = canvasEl;
+      const context: CanvasRenderingContext2D = ctx;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       let resizeTimer: ReturnType<typeof setTimeout>;
@@ -107,7 +110,7 @@ const DotField = memo(
         canvas.height = h * dpr;
         canvas.style.width = `${w}px`;
         canvas.style.height = `${h}px`;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         sizeRef.current = {
           w,
@@ -190,19 +193,19 @@ const DotField = memo(
           glowEl.style.opacity = String(glowOpacity.current);
         }
 
-        ctx.clearRect(0, 0, w, h);
+        context.clearRect(0, 0, w, h);
 
-        const grad = ctx.createLinearGradient(0, 0, w, h);
+        const grad = context.createLinearGradient(0, 0, w, h);
         grad.addColorStop(0, p.gradientFrom as string);
         grad.addColorStop(1, p.gradientTo as string);
-        ctx.fillStyle = grad;
+        context.fillStyle = grad;
 
         const cr = p.cursorRadius as number;
         const crSq = cr * cr;
         const rad = (p.dotRadius as number) / 2;
         const isBulge = p.bulgeOnly as boolean;
 
-        ctx.beginPath();
+        context.beginPath();
 
         for (let i = 0; i < len; i++) {
           const d = dots[i];
@@ -254,19 +257,19 @@ const DotField = memo(
           if (p.sparkle as boolean) {
             const hash = ((i * 2654435761) ^ (frameCount >> 3)) >>> 0;
             if (hash % 100 < 3) {
-              ctx.moveTo(drawX + rad * 1.8, drawY);
-              ctx.arc(drawX, drawY, rad * 1.8, 0, TWO_PI);
+              context.moveTo(drawX + rad * 1.8, drawY);
+              context.arc(drawX, drawY, rad * 1.8, 0, TWO_PI);
             } else {
-              ctx.moveTo(drawX + rad, drawY);
-              ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+              context.moveTo(drawX + rad, drawY);
+              context.arc(drawX, drawY, rad, 0, TWO_PI);
             }
           } else {
-            ctx.moveTo(drawX + rad, drawY);
-            ctx.arc(drawX, drawY, rad, 0, TWO_PI);
+            context.moveTo(drawX + rad, drawY);
+            context.arc(drawX, drawY, rad, 0, TWO_PI);
           }
         }
 
-        ctx.fill();
+        context.fill();
         rafRef.current = requestAnimationFrame(tick);
       }
 

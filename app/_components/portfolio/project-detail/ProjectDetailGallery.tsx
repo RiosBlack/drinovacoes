@@ -6,7 +6,7 @@ type Props = {
 };
 
 export default function ProjectDetailGallery({ images, title }: Props) {
-  const uniqueImages = [...new Set(images.filter(Boolean))];
+  const uniqueImages = Array.from(new Set(images.filter(Boolean)));
 
   if (uniqueImages.length === 0) return null;
 

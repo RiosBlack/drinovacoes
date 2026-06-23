@@ -52,7 +52,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
           return;
         }
 
-        const projetos = document.querySelector("#projetos");
+        const projetos = document.getElementById("projetos");
         if (projetos) {
           const lenis = getLenis();
           if (lenis) {
