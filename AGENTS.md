@@ -39,6 +39,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-06-23 — Sanity client fallback para build na Vercel](./changelogs/2026-06-23-sanity-client-build-fallback.md)
 - [2026-06-23 — Layout de detalhe de projetos](./changelogs/2026-06-23-project-detail-layout.md)
 - [2026-06-23 — Botão flutuante do WhatsApp](./changelogs/2026-06-23-whatsapp-float-button.md)
 - [2026-06-23 — Consolidar assets em public/ na raiz](./changelogs/2026-06-23-consolidate-public-folder.md)
