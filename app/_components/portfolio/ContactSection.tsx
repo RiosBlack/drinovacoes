@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import foto from "../../public/foto2.2.png";
 
 export default function ContactSection() {
   const whatsappMessage = encodeURIComponent(
@@ -45,7 +44,7 @@ export default function ContactSection() {
 
         <div className="contact-visual relative mx-auto mt-16 flex max-w-sm flex-col items-center">
           <div className="relative h-24 w-24 overflow-hidden rounded-full border border-[#d2d2d7]">
-            <Image src={foto} alt="Douglas Rios" fill className="object-cover" />
+            <Image src="/foto2.2.png" alt="Douglas Rios" fill className="object-cover" />
           </div>
           <p className="mt-4 text-sm font-medium text-[#1d1d1f]">
             Douglas Rios

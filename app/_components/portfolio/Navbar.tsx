@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../public/logo.png";
 
 const links = [
   { href: "#destaques", label: "Destaques" },
@@ -16,7 +15,7 @@ export default function Navbar() {
     <header className="nav-bar fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto flex h-12 max-w-[980px] items-center justify-between px-6 md:h-11">
         <Link href="/" className="opacity-80 transition-opacity hover:opacity-100">
-          <Image src={logo} alt="DR Inovações" width={28} height={28} />
+          <Image src="/logo.png" alt="DR Inovações" width={28} height={28} />
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">

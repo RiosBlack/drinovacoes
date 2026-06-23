@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import foto from "../../public/foto.png";
 import { useEffect, useState } from "react";
 
 export default function ImageSec1() {
@@ -23,7 +22,7 @@ export default function ImageSec1() {
           quality={100}
           style={{ objectFit: "cover", objectPosition: "top" }}
           alt="logo"
-          src={foto}
+          src="/foto2.2.png"
         />
       )}
     </>

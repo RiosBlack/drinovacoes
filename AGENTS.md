@@ -24,6 +24,7 @@ app/
   page.tsx                 # Home
   projetos/page.tsx        # Lista de projetos
   [id]/page.tsx            # Detalhe do projeto
+public/                    # Assets estáticos (imagens, vídeos)
 sanity/client.ts           # Cliente Sanity (blog)
 ../studio-drinovações/     # Sanity Studio (standalone)
 ```
@@ -37,6 +38,8 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-06-23 — Botão flutuante do WhatsApp](./changelogs/2026-06-23-whatsapp-float-button.md)
+- [2026-06-23 — Consolidar assets em public/ na raiz](./changelogs/2026-06-23-consolidate-public-folder.md)
 - [2026-06-23 — Linha vertical no vídeo dos serviços](./changelogs/2026-06-23-services-video-seam-fix.md)
 - [2026-06-23 — Espaçamento do texto no scroll do stack](./changelogs/2026-06-23-hero-text-spacing-scroll-stack.md)
 - [2026-06-22 — Highlights vídeo no hover](./changelogs/2026-06-22-highlights-video-hover.md)

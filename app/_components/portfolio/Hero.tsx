@@ -11,15 +11,12 @@ import {
   getLenis,
   setPageScrollLocked,
 } from "@/app/hooks/useSmoothScroll";
-import dash1 from "../../public/dash1.webp";
-import dash2 from "../../public/dash2.webp";
-import dash3 from "../../public/dash3.webp";
 import TextType from "./TextType";
 
 const DASHBOARDS = [
-  { src: dash1, alt: "Dashboard do projeto 1" },
-  { src: dash2, alt: "Dashboard do projeto 2" },
-  { src: dash3, alt: "Dashboard do projeto 3" },
+  { src: "/dash1.webp", alt: "Dashboard do projeto 1" },
+  { src: "/dash2.webp", alt: "Dashboard do projeto 2" },
+  { src: "/dash3.webp", alt: "Dashboard do projeto 3" },
 ] as const;
 
 type HeroProps = {
@@ -249,7 +246,7 @@ export default function Hero({ onPageUnlock }: HeroProps) {
                           fill
                           className="object-cover object-top"
                           sizes="(max-width: 768px) 100vw, 768px"
-                          priority={dashboard.src === dash1}
+                          priority={dashboard.src === DASHBOARDS[0].src}
                         />
                         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
                       </div>

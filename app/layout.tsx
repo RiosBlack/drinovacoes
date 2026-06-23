@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
+import WhatsAppFloat from "./_components/WhatsAppFloat";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -35,7 +36,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${raleway.variable} antialiased`}>{children}</body>
+      <body className={`${raleway.variable} antialiased`}>
+        {children}
+        <WhatsAppFloat />
+      </body>
     </html>
   );
 }

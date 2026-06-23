@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import logo from "../../public/logo.png";
 import Link from "next/link";
 import AnimatedContent from "../animationContent";
 import FadeContent from "../animationFadeIn";
@@ -58,7 +57,7 @@ export default function HeaderMenu() {
                 width={35}
                 height={35}
                 alt="logo"
-                src={logo}
+                src="/logo.png"
                 className="sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-12 lg:w-12 xl:h-12 xl:w-12 2xl:h-12 2xl:w-12"
               />
             </FadeContent>
