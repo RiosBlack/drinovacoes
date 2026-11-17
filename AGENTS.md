@@ -19,7 +19,7 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 app/
   v2/                             # Reformulação do site (section por section, rota isolada)
   v2/_i18n/                       # i18n leve (EN padrão + PT): provider + dicionário
-  v2/_components/                 # Section 1: Preloader, Hero, LetterGlitch, RotatingSeal
+  v2/_components/                 # Section 1: Preloader, Hero, LetterGlitch, RotatingSeal, PortraitMark
   _components/portfolio/          # Componentes do novo portfólio
   _components/portfolio/project-detail/  # Layout de detalhe de projeto
   hooks/useSmoothScroll.ts        # Lenis + GSAP ticker
@@ -43,6 +43,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-11-17 — v2 / Marca com retrato no hero](./changelogs/2026-11-17-v2-hero-portrait-mark.md)
 - [2026-11-17 — v2 / Section 1 (Preloader + Hero vivo)](./changelogs/2026-11-17-v2-section1-hero.md)
 - [2026-11-17 — Aprovar builds do pnpm](./changelogs/2026-11-17-pnpm-allow-builds.md)
 - [2026-10-20 — Página de política de privacidade](./changelogs/2026-10-20-politica-de-privacidade.md)

@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa6";
 import { useLanguage } from "../_i18n/LanguageProvider";
 import LetterGlitch from "./LetterGlitch";
+import PortraitMark from "./PortraitMark";
 import RotatingSeal from "./RotatingSeal";
 import LanguageToggle from "./LanguageToggle";
 
@@ -26,10 +27,59 @@ const SOCIALS = [
   { href: "https://linkedin.com", label: "LinkedIn", Icon: FaLinkedinIn },
 ];
 
+function trembleSwap(
+  seal: HTMLElement,
+  mark: HTMLElement,
+  sealX: number,
+  markX: number,
+) {
+  const steps = [
+    { rotation: -12, y: -4 },
+    { rotation: 11, y: 4 },
+    { rotation: -9, y: -3 },
+    { rotation: 7, y: 3 },
+    { rotation: -4, y: -1 },
+    { rotation: 0, y: 0 },
+  ];
+  const frames = (from: number, to: number) =>
+    steps.map((step, index) => ({
+      ...step,
+      x: from + ((to - from) * (index + 1)) / steps.length,
+      duration: index === steps.length - 1 ? 0.16 : 0.07,
+    }));
+
+  const sealFrom = Number(gsap.getProperty(seal, "x")) || 0;
+  const markFrom = Number(gsap.getProperty(mark, "x")) || 0;
+
+  return gsap
+    .timeline()
+    .to(seal, { keyframes: frames(sealFrom, sealX), ease: "none" }, 0)
+    .to(mark, { keyframes: frames(markFrom, markX), ease: "none" }, 0);
+}
+
 export default function HeroSection({ active }: HeroSectionProps) {
   const { t } = useLanguage();
   const contentRef = useRef<HTMLDivElement>(null);
   const playedRef = useRef(false);
+  const pairRef = useRef<HTMLDivElement>(null);
+  const sealRef = useRef<HTMLDivElement>(null);
+  const markRef = useRef<HTMLDivElement>(null);
+  const motionRef = useRef<gsap.core.Timeline | null>(null);
+
+  const swapPair = (swapped: boolean) => {
+    const seal = sealRef.current;
+    const mark = markRef.current;
+    const row = pairRef.current;
+    if (!seal || !mark || !row) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const gap = Number.parseFloat(getComputedStyle(row).columnGap) || 0;
+    const markX = swapped ? seal.offsetWidth + gap : 0;
+    const sealX = swapped ? -(mark.offsetWidth + gap) : 0;
+
+    motionRef.current?.kill();
+    motionRef.current = trembleSwap(seal, mark, sealX, markX);
+  };
 
   useEffect(() => {
     if (!active || playedRef.current) return;
@@ -53,8 +103,13 @@ export default function HeroSection({ active }: HeroSectionProps) {
       });
     }, contentRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      motionRef.current?.kill();
+    };
   }, [active]);
+
+  useEffect(() => () => motionRef.current?.kill(), []);
 
   return (
     <section className="relative min-h-screen w-full bg-[#0A0A0A]">
@@ -138,10 +193,20 @@ export default function HeroSection({ active }: HeroSectionProps) {
               </span>
             </h1>
 
-            {/* Selo + acento verde sob o título */}
-            <div className="hero-reveal mt-4 flex items-center gap-4 md:mt-6">
-              <RotatingSeal size={88} />
-              <span className="h-14 w-1.5 -skew-x-12 rounded bg-[#19E57B] shadow-[0_0_28px_rgba(25,229,123,0.6)] md:h-20" />
+            {/* Selo + marca com retrato sob o título */}
+            <div
+              ref={pairRef}
+              data-hero-pair
+              className="hero-reveal mt-4 flex items-center gap-4 md:mt-6"
+              onMouseEnter={() => swapPair(true)}
+              onMouseLeave={() => swapPair(false)}
+            >
+              <div ref={markRef} className="relative z-10 will-change-transform">
+                <PortraitMark alt={t("hero.portraitAlt")} />
+              </div>
+              <div ref={sealRef} className="will-change-transform">
+                <RotatingSeal size={88} />
+              </div>
             </div>
 
             <p className="hero-reveal mt-6 max-w-md text-sm text-white/60 md:max-w-lg md:text-base">
