@@ -93,34 +93,37 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       className="fixed inset-0 z-[60] flex items-center justify-center bg-[#0A0A0A]"
     >
       <div className="preloader-content flex flex-col items-center gap-8 px-6">
-        <div className="preloader-logo relative h-28 w-28 overflow-hidden rounded-xl md:h-36 md:w-36">
-          <Image
-            src="/logo-dr-mark.png"
-            alt="DR Inovações"
-            fill
-            priority
-            sizes="(max-width: 768px) 112px, 144px"
-            className="object-cover"
-          />
+        <div className="preloader-logo relative">
+          <div className="relative h-28 w-28 overflow-hidden rounded-xl md:h-36 md:w-36">
+            <Image
+              src="/logo-dr-mark.png"
+              alt="DR Inovações"
+              fill
+              priority
+              sizes="(max-width: 768px) 112px, 144px"
+              className="object-cover"
+            />
+          </div>
+
+          {/* Selo no canto superior direito do logo — mesmo papel do hero */}
+          <div className="absolute -right-5 -top-5 md:-right-7 md:-top-7">
+            <RotatingSeal size={80} />
+          </div>
         </div>
 
-        <div className="preloader-meta flex flex-col items-center gap-5">
-          <RotatingSeal size={96} />
-
-          <div className="flex w-56 flex-col items-center gap-2">
-            <div className="flex w-full items-center justify-between text-xs uppercase tracking-[0.25em] text-white/50">
-              <span>{t("preloader.loading")}</span>
-              <span className="font-mono tabular-nums text-[#19E57B]">
-                {progress}%
-              </span>
-            </div>
-            <div className="h-px w-full overflow-hidden bg-white/10">
-              <span
-                ref={barRef}
-                className="block h-full w-full origin-left bg-[#19E57B]"
-                style={{ transform: "scaleX(0)" }}
-              />
-            </div>
+        <div className="preloader-meta flex w-56 flex-col items-center gap-2">
+          <div className="flex w-full items-center justify-between text-xs uppercase tracking-[0.25em] text-white/50">
+            <span>{t("preloader.loading")}</span>
+            <span className="font-mono tabular-nums text-[#19E57B]">
+              {progress}%
+            </span>
+          </div>
+          <div className="h-px w-full overflow-hidden bg-white/10">
+            <span
+              ref={barRef}
+              className="block h-full w-full origin-left bg-[#19E57B]"
+              style={{ transform: "scaleX(0)" }}
+            />
           </div>
         </div>
       </div>

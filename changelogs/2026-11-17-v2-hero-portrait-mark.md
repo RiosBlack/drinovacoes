@@ -14,6 +14,22 @@ na frente e a lâmina verde aparecendo atrás, nas pontas.
 - `HeroSection` passa a renderizar selo + `PortraitMark`.
 - Alt do retrato no dicionário (`hero.portraitAlt`, EN e PT).
 
+## Iteração 7
+
+- Título do hero (`DR` / `INOVAÇÕES`) passa a usar **Nunito Black** (Google Fonts), sans arredondada próxima do “dr” do logo-mark.
+
+## Iteração 6
+
+- Lockup do hero alinhado à referência: retrato alto à esquerda, `DR` / `INOVAÇÕES` à direita e o selo no canto inferior direito do título.
+
+## Iteração 5
+
+- Texto do selo: frase única (`CONSTRUINDO O AMANHÃ` / `SHAPING TOMORROW`), com cada letra posicionada no anel para ocupar os 360° sem repetir a frase.
+
+## Iteração 4
+
+- Núcleo verde do selo maior: de 20px fixos para 40% do diâmetro do selo, ainda dentro do texto circular.
+
 ## Iteração 3
 
 - O hover não troca mais o retrato de lugar com o selo.

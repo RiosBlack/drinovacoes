@@ -128,24 +128,26 @@ export default function HeroSection({ active }: HeroSectionProps) {
             ))}
           </div>
 
-          {/* Núcleo central */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center text-center">
-            <h1 className="hero-reveal font-semibold uppercase leading-[0.92] tracking-tight text-[#f5f5f7]">
-              <span className="block text-[clamp(3rem,13vw,8rem)]">
-                {t("hero.titleTop")}
-              </span>
-              <span className="relative block text-[clamp(2.25rem,9vw,6rem)]">
-                {t("hero.titleBottom")}
-              </span>
-            </h1>
-
-            {/* Selo + marca com retrato sob o título */}
-            <div className="hero-reveal mt-4 flex items-center gap-4 md:mt-6">
+          {/* Núcleo central — lockup: retrato | título + selo */}
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
+            <div className="hero-reveal relative flex items-stretch gap-3 sm:gap-5 md:gap-6">
               <PortraitMark alt={t("hero.portraitAlt")} />
-              <RotatingSeal size={88} />
+
+              <div className="relative flex min-w-0 flex-col justify-between pb-8 pr-10 pt-0.5 sm:pb-10 sm:pr-12 md:pb-12 md:pr-14">
+                <h1 className="pt-5 font-brand text-left text-[clamp(2.6rem,10.4vw,7.1rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#f5f5f7]">
+                  <span className="block">{t("hero.titleTop")}</span>
+                  <span className="relative mt-1 block">
+                    {t("hero.titleBottom")}
+                  </span>
+                </h1>
+
+                <div className="absolute bottom-0 right-0">
+                  <RotatingSeal size={88} />
+                </div>
+              </div>
             </div>
 
-            <p className="hero-reveal mt-6 max-w-md text-sm text-white/60 md:max-w-lg md:text-base">
+            <p className="hero-reveal mt-10 max-w-md text-center text-sm text-white/60 md:mt-12 md:max-w-lg md:text-base">
               {t("hero.subtitle")}
             </p>
 

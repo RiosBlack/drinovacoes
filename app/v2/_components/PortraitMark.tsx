@@ -15,7 +15,7 @@ const TOP_PHOTO = "polygon(0 0, 72% 0, 100% 28%, 100% 100%, 0 100%)";
 const BOTTOM_PHOTO = "polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%)";
 
 /**
- * Marca do hero no formato do logo DR.
+ * Retrato alto no formato do logo DR (canto cortado).
  * No hover, o canto verde some de cima e reaparece embaixo, tremendo no lugar.
  */
 export default function PortraitMark({ alt, className = "" }: PortraitMarkProps) {
@@ -71,7 +71,7 @@ export default function PortraitMark({ alt, className = "" }: PortraitMarkProps)
 
   return (
     <div
-      className={`relative h-[4.85rem] w-[4.85rem] shrink-0 md:h-[5.85rem] md:w-[5.85rem] ${className}`}
+      className={`relative h-[clamp(9.5rem,28vw,15.5rem)] w-[clamp(6.75rem,18vw,11rem)] shrink-0 ${className}`}
       onMouseEnter={() => moveCorner(true)}
       onMouseLeave={() => moveCorner(false)}
     >
@@ -93,7 +93,7 @@ export default function PortraitMark({ alt, className = "" }: PortraitMarkProps)
           fill
           priority
           quality={90}
-          sizes="180px"
+          sizes="(min-width: 768px) 180px, 120px"
           className="-scale-x-100 object-cover object-[62%_18%]"
         />
       </div>

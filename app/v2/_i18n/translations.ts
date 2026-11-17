@@ -10,7 +10,7 @@ export const translations = {
   en: {
     "preloader.loading": "Loading",
     "preloader.enter": "Enter",
-    "hero.seal": "SHAPE · TOMORROW · WITH · DR · ",
+    "hero.seal": "SHAPING · TOMORROW · ",
     "hero.role": "SOFTWARE & AI",
     "hero.titleTop": "DR",
     "hero.titleBottom": "INOVAÇÕES",
@@ -26,7 +26,7 @@ export const translations = {
   pt: {
     "preloader.loading": "Carregando",
     "preloader.enter": "Entrar",
-    "hero.seal": "CONSTRUÍMOS · O · AMANHÃ · COM · DR · ",
+    "hero.seal": "CONSTRUINDO · O · AMANHÃ · ",
     "hero.role": "SOFTWARE & IA",
     "hero.titleTop": "DR",
     "hero.titleBottom": "INOVAÇÕES",

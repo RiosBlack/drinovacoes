@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Raleway } from "next/font/google";
+import { Nunito, Raleway } from "next/font/google";
 import WhatsAppFloat from "./_components/WhatsAppFloat";
 import "./globals.css";
 
@@ -14,6 +14,15 @@ const raleway = Raleway({
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-raleway",
   display: "optional",
+  adjustFontFallback: true,
+});
+
+/** Sans arredondada e pesada — mais próxima do “dr” do logo-mark */
+const nunito = Nunito({
+  subsets: ["latin", "latin-ext"],
+  weight: ["800", "900"],
+  variable: "--font-nunito",
+  display: "swap",
   adjustFontFallback: true,
 });
 
@@ -36,7 +45,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${raleway.variable} antialiased`}>
+      <body className={`${raleway.variable} ${nunito.variable} antialiased`}>
         {children}
         <WhatsAppFloat />
       </body>

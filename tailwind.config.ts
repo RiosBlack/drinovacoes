@@ -78,6 +78,11 @@ const config: Config = {
       },
       fontFamily: {
         bitcount: ['"Bitcount Single"', "monospace"],
+        brand: [
+          "var(--font-nunito)",
+          "var(--font-raleway)",
+          "sans-serif",
+        ],
         sans: [
           "var(--font-raleway)",
           "-apple-system",
