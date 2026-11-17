@@ -1,7 +1,7 @@
 # v2 — Section Contato / “Let’s work together” (estilo Dennis Snellenberg)
 
 **Data:** 2026-11-17  
-**Status:** Aprovado em conversa (layout + motion + links); aguardando review do arquivo  
+**Status:** Aprovado e implementado  
 **Rota:** `/v2`  
 **Âncora:** `#contato`  
 **Referência visual:** [dennissnellenberg.com](https://dennissnellenberg.com/) — bloco “Let’s work together” + footer

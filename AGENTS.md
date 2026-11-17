@@ -19,7 +19,7 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 app/
   v2/                             # Reformulação do site (section por section, rota isolada)
   v2/_i18n/                       # i18n leve (EN padrão + PT): provider + dicionário
-  v2/_components/                 # Section 1–3: Preloader, Hero, ProjectsSection, AboutSection, LetterGlitch, RotatingSeal, PortraitMark, BackgroundAudio
+  v2/_components/                 # Preloader, Hero, Projects, About, Contact, LetterGlitch, RotatingSeal, PortraitMark, BackgroundAudio
   v2/_data/projects.json          # Projetos estáticos da section 2 (vídeo, categoria, href)
   _components/portfolio/          # Componentes do novo portfólio
   _components/portfolio/project-detail/  # Layout de detalhe de projeto
@@ -44,6 +44,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-11-17 — v2 / Section contato (“Let’s work together”)](./changelogs/2026-11-17-v2-contact-section.md)
 - [2026-11-17 — v2 / Section "Sobre mim" (estilo Lusion)](./changelogs/2026-11-17-v2-about-section.md)
 - [2026-11-17 — v2 / Timing do preloader (sem flash no hero)](./changelogs/2026-11-17-v2-preloader-reveal-timing.md)
 - [2026-11-17 — v2 / Section de projetos (estilo mowa)](./changelogs/2026-11-17-v2-projects-section.md)

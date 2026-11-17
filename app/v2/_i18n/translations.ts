@@ -45,6 +45,15 @@ export const translations = {
       "Fullstack|AI & Agents|Automations|Marketing|Business Vision",
     "about.videoAlt": "Camera transition showcase video",
     "about.cta": "Let's build together",
+    "contact.headline": "Let's work together",
+    "contact.cta": "Get in touch",
+    "contact.whatsapp": "WhatsApp",
+    "contact.instagram": "Instagram",
+    "contact.versionLabel": "Version",
+    "contact.versionValue": "2026 © Edition",
+    "contact.portraitAlt": "Portrait of Douglas Rios",
+    "contact.whatsappMessage":
+      "Hi! I'd like to talk about a software project.",
   },
   pt: {
     "preloader.loading": "Carregando",
@@ -84,6 +93,15 @@ export const translations = {
       "Fullstack|IA & Agentes|Automações|Marketing|Visão Empresarial",
     "about.videoAlt": "Vídeo com transição de câmera",
     "about.cta": "Vamos construir juntos",
+    "contact.headline": "Vamos trabalhar juntos",
+    "contact.cta": "Fale comigo",
+    "contact.whatsapp": "WhatsApp",
+    "contact.instagram": "Instagram",
+    "contact.versionLabel": "Versão",
+    "contact.versionValue": "2026 © Edição",
+    "contact.portraitAlt": "Retrato de Douglas Rios",
+    "contact.whatsappMessage":
+      "Olá! Gostaria de conversar sobre um projeto de software.",
   },
 } as const;
 

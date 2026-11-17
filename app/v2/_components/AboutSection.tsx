@@ -166,9 +166,7 @@ export default function AboutSection() {
 
   const scrollToContact = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    const target =
-      document.getElementById("contato") ??
-      document.getElementById("projetos");
+    const target = document.getElementById("contato");
     if (!target) return;
     const lenis = getLenis();
     if (lenis) lenis.scrollTo(target, { offset: 0 });

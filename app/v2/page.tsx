@@ -13,6 +13,7 @@ import Preloader from "./_components/Preloader";
 import HeroSection from "./_components/HeroSection";
 import ProjectsSection from "./_components/ProjectsSection";
 import AboutSection from "./_components/AboutSection";
+import ContactSection from "./_components/ContactSection";
 
 function V2Experience() {
   const [showBackground, setShowBackground] = useState(false);
@@ -70,6 +71,7 @@ function V2Experience() {
         <HeroSection showBackground={showBackground} showContent={showContent} />
         {preloaderDone ? <ProjectsSection /> : null}
         {preloaderDone ? <AboutSection /> : null}
+        {preloaderDone ? <ContactSection /> : null}
       </main>
     </BackgroundAudioProvider>
   );
