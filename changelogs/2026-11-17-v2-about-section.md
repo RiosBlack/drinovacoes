@@ -4,6 +4,14 @@
 
 - Nova section `#sobre` na rota `/v2`, logo abaixo de `#projetos`, inspirada no bloco
   "where creative ideas come to life" do [lusion.co](https://lusion.co/).
+
+## Iteração — mobile layout
+
+- No mobile (`< md`), layout empilhado estático (eyebrow → headline → vídeo →
+  painéis) sem sticky/`xPercent` lateral — evita corte de texto e faixa branca.
+- Desktop mantém a sequência sticky scrubada.
+- Hero mobile: retrato menor/opaco no rodapé, selo reduzido, título com
+  drop-shadow para legibilidade.
 - Bio do fundador (programador fullstack, projetos entregues, IA/agentes/automações,
   mercado, marketing e bagagem empresarial), bilíngue (EN padrão + PT).
 - Vídeo de transição de câmera adicionado em `public/v2/about-camera.mp4`

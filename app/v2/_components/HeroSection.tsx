@@ -171,35 +171,35 @@ export default function HeroSection({
             ))}
           </div>
 
-          {/* Retrato grande — esquerda, atrás do texto, saindo de baixo */}
-          <div className="hero-reveal pointer-events-none absolute inset-y-0 left-[16%] z-[1] flex items-end">
-            <div className="pointer-events-auto h-[min(92%,48rem)] w-[clamp(18rem,46vw,34rem)] translate-y-[10%]">
+          {/* Retrato — mobile/tablet: centro na base, atrás do título; desktop lg+: esquerda */}
+          <div className="hero-reveal pointer-events-none absolute inset-x-0 bottom-0 z-[1] flex items-end justify-center lg:inset-y-0 lg:left-[16%] lg:right-auto lg:justify-start">
+            <div className="pointer-events-auto h-[min(58vh,28rem)] w-[min(88vw,22rem)] translate-y-[4%] opacity-55 sm:h-[min(62vh,32rem)] sm:w-[min(72vw,26rem)] sm:opacity-60 lg:h-[min(92%,48rem)] lg:w-[clamp(18rem,46vw,34rem)] lg:translate-y-[10%] lg:opacity-100">
               <PortraitMark alt={t("hero.portraitAlt")} />
             </div>
           </div>
 
           {/* Núcleo central — título + selo + CTAs centralizados */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center pb-8 md:pb-0">
             <div className="hero-reveal relative">
-              <div className="relative flex min-w-0 flex-col justify-between pb-8 pr-10 pt-0.5 sm:pb-10 sm:pr-12 md:pb-12 md:pr-14">
-                <h1 className="pt-5 text-start font-brand text-[clamp(2.6rem,10.4vw,7.1rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#f5f5f7]">
+              <div className="relative flex min-w-0 flex-col justify-between pb-6 pr-8 pt-0.5 sm:pb-10 sm:pr-12 md:pb-12 md:pr-14">
+                <h1 className="pt-2 text-start font-brand text-[clamp(2.35rem,11vw,7.1rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#f5f5f7] drop-shadow-[0_2px_18px_rgba(0,0,0,0.65)] md:pt-5">
                   <span className="block">{t("hero.titleTop")}</span>
                   <span className="relative mt-1 block">
                     {t("hero.titleBottom")}
                   </span>
                 </h1>
 
-                <div className="absolute bottom-0 right-0">
+                <div className="absolute bottom-0 right-0 origin-bottom-right scale-[0.72] md:scale-100">
                   <RotatingSeal size={88} />
                 </div>
               </div>
             </div>
 
-            <p className="hero-reveal mt-5 max-w-md text-center text-sm text-white/60 md:mt-10 md:max-w-lg md:text-base">
+            <p className="hero-reveal mt-5 max-w-[20rem] px-1 text-center text-sm text-white/70 md:mt-10 md:max-w-lg md:px-0 md:text-base md:text-white/60">
               {t("hero.subtitle")}
             </p>
 
-            <div className="hero-reveal mt-7 flex flex-wrap items-center justify-center gap-4">
+            <div className="hero-reveal mt-6 flex flex-wrap items-center justify-center gap-3 md:mt-7 md:gap-4">
               <a
                 href="#projetos"
                 onClick={scrollToProjects}
@@ -217,8 +217,8 @@ export default function HeroSection({
           </div>
 
           {/* Tag canto inferior direito */}
-          <div className="hero-reveal relative z-10 mt-auto flex justify-end">
-            <span className="text-right text-xs font-semibold uppercase leading-tight tracking-[0.2em] text-white/70 md:text-sm">
+          <div className="hero-reveal relative z-10 mt-auto flex justify-end pt-4">
+            <span className="text-right text-[0.65rem] font-semibold uppercase leading-tight tracking-[0.18em] text-white/70 md:text-sm md:tracking-[0.2em]">
               {t("hero.role")
                 .split(" & ")
                 .map((part, i) => (

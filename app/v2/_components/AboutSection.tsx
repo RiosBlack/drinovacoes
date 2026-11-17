@@ -23,6 +23,7 @@ export default function AboutSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const panelARef = useRef<HTMLDivElement>(null);
   const panelBRef = useRef<HTMLDivElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
   const headlineLines = useMemo(() => t("about.headline").split(" / "), [t]);
   const pills = useMemo(() => t("about.pills").split("|").filter(Boolean), [t]);
@@ -40,6 +41,22 @@ export default function AboutSection() {
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+    // Mobile usa layout estático empilhado — sem scrub lateral
+    if (isMobile) {
+      const mobileVideo = mobileVideoRef.current;
+      if (mobileVideo) {
+        const tryPlay = () => {
+          mobileVideo.play().catch(() => {
+            /* autoplay pode falhar sem gesto */
+          });
+        };
+        if (mobileVideo.readyState >= 2) tryPlay();
+        else mobileVideo.addEventListener("loadeddata", tryPlay, { once: true });
+      }
+      return;
+    }
 
     let duration = 0;
     let targetTime = 0;
@@ -50,7 +67,6 @@ export default function AboutSection() {
 
     const onMeta = () => {
       duration = video.duration || 0;
-      // Preload frames: um seek leve ajuda o decoder a aquecer
       if (duration > 0 && video.readyState >= 2) {
         try {
           video.currentTime = 0.001;
@@ -64,14 +80,8 @@ export default function AboutSection() {
     video.addEventListener("seeked", () => {
       seeking = false;
     });
-    // Scrub controla o tempo — nunca deixa o play nativo competir
     video.pause();
 
-    /**
-     * Loop de rAF: interpola currentTime em direção ao alvo do scroll.
-     * Só aplica um novo seek quando o anterior terminou → sensação de play
-     * contínuo, sem travar na troca de lado.
-     */
     const tick = () => {
       rafId = requestAnimationFrame(tick);
       if (!active || !duration) return;
@@ -101,13 +111,11 @@ export default function AboutSection() {
         return;
       }
 
-      // Estados iniciais: vídeo à direita, painel A visível, painel B oculto
       gsap.set(videoWrap, { xPercent: 52, scale: 0.94, force3D: true });
       gsap.set(panelA, { autoAlpha: 0, y: 40 });
       gsap.set(panelA.querySelectorAll(".about-line-inner"), { yPercent: 110 });
       gsap.set(panelB, { autoAlpha: 0, y: 40 });
 
-      // Layout scrubado — transform no wrapper, vídeo fica estático no compositor
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -129,13 +137,11 @@ export default function AboutSection() {
           },
           onUpdate: (self) => {
             if (!duration) return;
-            // Mapeia progresso → tempo; ligeira folga no fim evita frame preto
             targetTime = Math.min(duration - 0.05, self.progress * duration);
           },
         },
       });
 
-      // (0.00–0.12) Entrada: painel A sobe + vídeo "assenta"
       tl.to(panelA, { autoAlpha: 1, y: 0, ease: EASE, duration: 0.1 }, 0.02);
       tl.to(
         panelA.querySelectorAll(".about-line-inner"),
@@ -144,7 +150,6 @@ export default function AboutSection() {
       );
       tl.to(videoWrap, { scale: 1, ease: EASE, duration: 0.12 }, 0.02);
 
-      // (0.38–0.62) Troca de lado — mais longa = menos "salto" visual
       tl.to(panelA, { autoAlpha: 0, y: -36, duration: 0.16 }, 0.38);
       tl.to(
         videoWrap,
@@ -153,7 +158,6 @@ export default function AboutSection() {
       );
       tl.to(panelB, { autoAlpha: 1, y: 0, ease: EASE, duration: 0.16 }, 0.5);
 
-      // Respiro no fim
       tl.to({}, { duration: 0.16 });
     }, sectionRef);
 
@@ -177,18 +181,105 @@ export default function AboutSection() {
     <section
       id="sobre"
       ref={sectionRef}
-      className="relative z-10 w-full bg-[#0A0A0A] text-[#f5f5f7]"
-      style={{ height: "340vh" }}
+      className="relative z-10 w-full bg-[#0A0A0A] text-[#f5f5f7] md:h-[340vh]"
     >
+      {/* —— Mobile: stack estático (sem scrub lateral) —— */}
+      <div className="relative overflow-x-hidden px-4 py-16 md:hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,_rgba(25,229,123,0.1)_0%,_transparent_55%)]" />
+
+        <div className="relative mx-auto max-w-lg">
+          <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#19E57B] opacity-70" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#19E57B]" />
+            </span>
+            <span className="text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-white/70">
+              {t("about.eyebrow")}
+            </span>
+          </div>
+
+          <h2 className="font-brand text-[clamp(2.1rem,10vw,3.2rem)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-white">
+            {headlineLines.map((line, i) => (
+              <span key={line + i} className="block pb-[0.06em]">
+                {i === headlineLines.length - 1 ? (
+                  <span className="text-[#19E57B]">{line}</span>
+                ) : (
+                  line
+                )}
+              </span>
+            ))}
+          </h2>
+
+          <div className="relative mx-auto mt-8 aspect-[4/5] w-full max-w-[280px] overflow-hidden rounded-[22px] bg-[#111] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]">
+            <video
+              ref={mobileVideoRef}
+              src="/v2/about-camera.mp4"
+              muted
+              playsInline
+              loop
+              autoPlay
+              preload="metadata"
+              aria-label={t("about.videoAlt")}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 rounded-[22px] ring-1 ring-inset ring-white/10" />
+          </div>
+
+          <div className="mt-10 space-y-10">
+            <div>
+              <h3 className="font-brand text-[clamp(1.6rem,7vw,2.2rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] text-white">
+                {t("about.panel1Title")}
+              </h3>
+              <p className="mt-4 text-base font-medium leading-[1.55] text-white/75">
+                {t("about.panel1Text")}
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-brand text-[clamp(1.6rem,7vw,2.2rem)] font-black uppercase leading-[0.95] tracking-[-0.03em] text-white">
+                {t("about.panel2Title")}
+              </h3>
+              <p className="mt-4 text-base font-medium leading-[1.55] text-white/75">
+                {t("about.panel2Text")}
+              </p>
+
+              <ul className="mt-6 flex flex-wrap gap-2.5">
+                {pills.map((pill) => (
+                  <li
+                    key={pill}
+                    className="rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-white/80"
+                  >
+                    {pill}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#contato"
+                onClick={scrollToContact}
+                className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#19E57B] transition-opacity duration-200 hover:opacity-80"
+              >
+                {t("about.cta")}
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* —— Desktop: sticky scrub Lusion-like —— */}
       <div
         ref={stageRef}
-        className="sticky top-0 flex h-screen items-center overflow-hidden px-4 md:px-6 lg:px-10"
+        className="sticky top-0 hidden h-screen items-center overflow-hidden px-4 md:flex md:px-6 lg:px-10"
       >
-        {/* Brilho sutil de fundo */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,_rgba(25,229,123,0.1)_0%,_transparent_58%)]" />
 
         <div className="relative mx-auto h-[70vh] w-full max-w-[1600px]">
-          {/* Vídeo: transform só no wrapper — o <video> não é transformado */}
           <div className="absolute left-1/2 top-1/2 w-[clamp(260px,40vw,560px)] -translate-x-1/2 -translate-y-1/2">
             <div
               ref={videoWrapRef}
@@ -212,7 +303,6 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Painel A — texto à esquerda (vídeo à direita) */}
           <div
             ref={panelARef}
             className="absolute left-0 top-1/2 w-full max-w-[34rem] -translate-y-1/2 md:max-w-[38%]"
@@ -252,7 +342,6 @@ export default function AboutSection() {
             </p>
           </div>
 
-          {/* Painel B — texto à direita (vídeo à esquerda) */}
           <div
             ref={panelBRef}
             className="absolute right-0 top-1/2 flex w-full max-w-[34rem] -translate-y-1/2 flex-col items-start md:left-auto md:max-w-[38%] md:items-end md:text-right"
