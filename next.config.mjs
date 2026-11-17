@@ -7,6 +7,15 @@ const nextConfig = {
       {protocol: 'https', hostname: 'cdn.simpleicons.org'},
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/v2",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
