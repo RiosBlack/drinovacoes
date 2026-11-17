@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { Mail } from "lucide-react";
 import { FaInstagram } from "react-icons/fa6";
+import { getLenis } from "../../hooks/useSmoothScroll";
 import { useLanguage } from "../_i18n/LanguageProvider";
 import LetterGlitch from "./LetterGlitch";
 import PortraitMark from "./PortraitMark";
@@ -13,20 +14,36 @@ import LanguageToggle from "./LanguageToggle";
 import { AudioToggle } from "./BackgroundAudio";
 
 type HeroSectionProps = {
-  active: boolean;
+  /** Fundo (LetterGlitch) visível — sobe com a cortina. */
+  showBackground: boolean;
+  /** Conteúdo do hero — anima só depois que a cortina terminou. */
+  showContent: boolean;
 };
 
 const SOCIALS = [
   { href: "https://instagram.com", label: "Instagram", Icon: FaInstagram },
 ];
 
-export default function HeroSection({ active }: HeroSectionProps) {
+export default function HeroSection({
+  showBackground,
+  showContent,
+}: HeroSectionProps) {
   const { t } = useLanguage();
   const contentRef = useRef<HTMLDivElement>(null);
   const playedRef = useRef(false);
 
+  // Conteúdo fica oculto até a cortina terminar
   useEffect(() => {
-    if (!active || playedRef.current) return;
+    const content = contentRef.current;
+    if (!content || playedRef.current) return;
+    gsap.set(content.querySelectorAll(".hero-reveal"), {
+      autoAlpha: 0,
+      y: 28,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!showContent || playedRef.current) return;
     const content = contentRef.current;
     if (!content) return;
     playedRef.current = true;
@@ -34,21 +51,40 @@ export default function HeroSection({ active }: HeroSectionProps) {
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero-reveal", {
-        autoAlpha: 0,
-        y: 28,
+      if (prefersReduced) {
+        gsap.set(".hero-reveal", { autoAlpha: 1, y: 0 });
+        return;
+      }
+
+      // Só depois do fundo: título, retrato, CTAs entram em cena
+      gsap.to(".hero-reveal", {
+        autoAlpha: 1,
+        y: 0,
         duration: 0.9,
         ease: "power3.out",
         stagger: 0.12,
-        delay: 0.15,
+        delay: 0.08,
       });
     }, contentRef);
 
     return () => ctx.revert();
-  }, [active]);
+  }, [showContent]);
+
+  const scrollToProjects = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const target = document.getElementById("projetos");
+    if (!target) return;
+
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(target, { offset: 0 });
+      return;
+    }
+
+    target.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section className="relative min-h-screen w-full bg-[#0A0A0A]">
@@ -61,24 +97,26 @@ export default function HeroSection({ active }: HeroSectionProps) {
           ref={contentRef}
           className="relative flex min-h-[calc(100svh-1.5rem)] w-full max-w-[2560px] flex-col overflow-hidden rounded-[1.75rem] border border-white/12 bg-black/55 p-5 md:min-h-[calc(100svh-2rem)] md:p-10"
         >
-          {/* Fundo LetterGlitch (monta após o preloader) */}
-          {active && (
-            <div className="pointer-events-none absolute inset-0 z-0">
-              <LetterGlitch
-                glitchColors={["#ffffff", "#19E57B"]}
-                baseColor="#ffffff"
-                glitchAmount={0.45}
-                speed={1}
-                flow={0.45}
-                baseOpacity={0.14}
-                centerFade={0.8}
-                edgeFade={0.12}
-                clickEffect="tear"
-                interactive
-                cursorRadius={160}
-              />
-            </div>
-          )}
+          {/* WebGL aquece desde o início; só aparece quando a cortina sobe */}
+          <div
+            className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-700 ${showBackground ? "opacity-100" : "opacity-0"
+              }`}
+            aria-hidden={!showBackground}
+          >
+            <LetterGlitch
+              glitchColors={["#ffffff", "#19E57B"]}
+              baseColor="#ffffff"
+              glitchAmount={0.45}
+              speed={1}
+              flow={0.45}
+              baseOpacity={0.14}
+              centerFade={0.8}
+              edgeFade={0.12}
+              clickEffect="tear"
+              interactive={showContent}
+              cursorRadius={160}
+            />
+          </div>
 
           {/* Topo: logo + idioma/contato */}
           <header className="hero-reveal relative z-10 flex items-center justify-between">
@@ -133,13 +171,18 @@ export default function HeroSection({ active }: HeroSectionProps) {
             ))}
           </div>
 
-          {/* Núcleo central — lockup: retrato | título + selo */}
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
-            <div className="hero-reveal relative flex items-stretch gap-3 sm:gap-5 md:gap-6">
+          {/* Retrato grande — esquerda, atrás do texto, saindo de baixo */}
+          <div className="hero-reveal pointer-events-none absolute inset-y-0 left-[16%] z-[1] flex items-end">
+            <div className="pointer-events-auto h-[min(92%,48rem)] w-[clamp(18rem,46vw,34rem)] translate-y-[10%]">
               <PortraitMark alt={t("hero.portraitAlt")} />
+            </div>
+          </div>
 
+          {/* Núcleo central — título + selo + CTAs centralizados */}
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
+            <div className="hero-reveal relative">
               <div className="relative flex min-w-0 flex-col justify-between pb-8 pr-10 pt-0.5 sm:pb-10 sm:pr-12 md:pb-12 md:pr-14">
-                <h1 className="pt-5 font-brand text-left text-[clamp(2.6rem,10.4vw,7.1rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#f5f5f7]">
+                <h1 className="pt-5 text-start font-brand text-[clamp(2.6rem,10.4vw,7.1rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#f5f5f7]">
                   <span className="block">{t("hero.titleTop")}</span>
                   <span className="relative mt-1 block">
                     {t("hero.titleBottom")}
@@ -159,6 +202,7 @@ export default function HeroSection({ active }: HeroSectionProps) {
             <div className="hero-reveal mt-7 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#projetos"
+                onClick={scrollToProjects}
                 className="cursor-pointer rounded-full bg-[#19E57B] px-6 py-2.5 text-sm font-semibold text-black transition-colors duration-200 hover:bg-[#15c96b]"
               >
                 {t("hero.ctaProjects")}

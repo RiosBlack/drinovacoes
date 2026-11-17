@@ -24,6 +24,15 @@ export const translations = {
     "audio.unmute": "Unmute background music",
     "lang.toggle": "PT",
     "lang.current": "EN",
+    "projects.title": "Projects",
+    "projects.description":
+      "Pick a category and browse the work we ship — software, websites, e-commerce and AI.",
+    "projects.all": "All",
+    "projects.categoryLabel": "Category",
+    "projects.open": "Open project",
+    "projects.prev": "Previous",
+    "projects.next": "Next",
+    "projects.page": "Page",
   },
   pt: {
     "preloader.loading": "Carregando",
@@ -42,6 +51,15 @@ export const translations = {
     "audio.unmute": "Ligar música de fundo",
     "lang.toggle": "EN",
     "lang.current": "PT",
+    "projects.title": "Projetos",
+    "projects.description":
+      "Escolha a categoria e veja o que entregamos — software, sites, e-commerce e IA.",
+    "projects.all": "Todos",
+    "projects.categoryLabel": "Categoria",
+    "projects.open": "Abrir projeto",
+    "projects.prev": "Anterior",
+    "projects.next": "Próxima",
+    "projects.page": "Página",
   },
 } as const;
 

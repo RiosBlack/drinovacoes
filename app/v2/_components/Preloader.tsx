@@ -7,15 +7,23 @@ import { useLanguage } from "../_i18n/LanguageProvider";
 import RotatingSeal from "./RotatingSeal";
 
 type PreloaderProps = {
-  onComplete: () => void;
+  /** Cortina começa a subir — revela só o fundo (LetterGlitch). */
+  onBackground: () => void;
+  /** Cortina terminou — hora do conteúdo do hero animar. */
+  onComplete?: () => void;
 };
 
-export default function Preloader({ onComplete }: PreloaderProps) {
+export default function Preloader({ onBackground, onComplete }: PreloaderProps) {
   const { t } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLSpanElement>(null);
+  const onBackgroundRef = useRef(onBackground);
+  const onCompleteRef = useRef(onComplete);
   const [progress, setProgress] = useState(0);
   const [hidden, setHidden] = useState(false);
+
+  onBackgroundRef.current = onBackground;
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const root = rootRef.current;
@@ -32,7 +40,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         defaults: { ease: "power2.out" },
         onComplete: () => {
           setHidden(true);
-          onComplete();
+          onCompleteRef.current?.();
         },
       });
 
@@ -65,25 +73,31 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         prefersReduced ? ">" : "<0.1",
       );
 
-      // Saída: logo sobe e a cortina abre
+      // Saída do logo do preloader
       tl.to(".preloader-content", {
         opacity: 0,
         y: -24,
-        duration: prefersReduced ? 0 : 0.5,
+        duration: prefersReduced ? 0 : 0.45,
         ease: "power2.in",
-      }).to(
+      });
+
+      // Cortina sobe: só o fundo aparece atrás (conteúdo do hero ainda oculto)
+      tl.to(
         root,
         {
           yPercent: -100,
-          duration: prefersReduced ? 0 : 0.7,
+          duration: prefersReduced ? 0 : 0.75,
           ease: "power3.inOut",
+          onStart: () => {
+            onBackgroundRef.current();
+          },
         },
-        prefersReduced ? ">" : "<0.1",
+        prefersReduced ? ">" : "<0.05",
       );
     }, rootRef);
 
     return () => ctx.revert();
-  }, [onComplete]);
+  }, []);
 
   if (hidden) return null;
 
@@ -105,7 +119,6 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             />
           </div>
 
-          {/* Selo no canto superior direito do logo — mesmo papel do hero */}
           <div className="absolute -right-5 -top-5 md:-right-7 md:-top-7">
             <RotatingSeal size={80} />
           </div>

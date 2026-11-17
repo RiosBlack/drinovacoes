@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   getLenis,
@@ -11,15 +11,27 @@ import { LanguageProvider } from "./_i18n/LanguageProvider";
 import { BackgroundAudioProvider } from "./_components/BackgroundAudio";
 import Preloader from "./_components/Preloader";
 import HeroSection from "./_components/HeroSection";
+import ProjectsSection from "./_components/ProjectsSection";
 
 function V2Experience() {
-  const [revealed, setRevealed] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [preloaderDone, setPreloaderDone] = useState(false);
 
   useSmoothScroll();
 
+  const handleBackground = useCallback(() => {
+    setShowBackground(true);
+  }, []);
+
+  const handlePreloaderComplete = useCallback(() => {
+    setShowContent(true);
+    setPreloaderDone(true);
+  }, []);
+
   // Trava o scroll enquanto o preloader estiver ativo
   useEffect(() => {
-    if (revealed) return;
+    if (preloaderDone) return;
 
     let intervalId: ReturnType<typeof setInterval> | undefined;
     const tryLock = () => {
@@ -37,21 +49,25 @@ function V2Experience() {
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, [revealed]);
+  }, [preloaderDone]);
 
-  // Libera o scroll e recalcula triggers ao revelar
+  // Libera o scroll e recalcula triggers após a cortina subir
   useEffect(() => {
-    if (!revealed) return;
+    if (!preloaderDone) return;
     setPageScrollLocked(false);
     const timer = setTimeout(() => ScrollTrigger.refresh(), 200);
     return () => clearTimeout(timer);
-  }, [revealed]);
+  }, [preloaderDone]);
 
   return (
-    <BackgroundAudioProvider active={revealed}>
+    <BackgroundAudioProvider active={showContent}>
       <main className="min-h-screen bg-[#0A0A0A] text-[#f5f5f7]">
-        <Preloader onComplete={() => setRevealed(true)} />
-        <HeroSection active={revealed} />
+        <Preloader
+          onBackground={handleBackground}
+          onComplete={handlePreloaderComplete}
+        />
+        <HeroSection showBackground={showBackground} showContent={showContent} />
+        {preloaderDone ? <ProjectsSection /> : null}
       </main>
     </BackgroundAudioProvider>
   );

@@ -1,0 +1,86 @@
+{
+  "categories": [
+    {
+      "id": "websites",
+      "label": { "en": "Websites", "pt": "Sites" }
+    },
+    {
+      "id": "ecommerce",
+      "label": { "en": "E-commerce", "pt": "E-commerce" }
+    },
+    {
+      "id": "software",
+      "label": { "en": "Software", "pt": "Software" }
+    },
+    {
+      "id": "ai",
+      "label": { "en": "AI", "pt": "IA" }
+    }
+  ],
+  "projects": [
+    {
+      "id": "site",
+      "title": { "en": "Websites", "pt": "Sites" },
+      "category": "websites",
+      "video": "/Site.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": true
+    },
+    {
+      "id": "ecommerce",
+      "title": { "en": "E-commerce", "pt": "E-commerce" },
+      "category": "ecommerce",
+      "video": "/E-commerce.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": true
+    },
+    {
+      "id": "sistemas",
+      "title": { "en": "Software Systems", "pt": "Sistemas" },
+      "category": "software",
+      "video": "/Sistemas.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": true
+    },
+    {
+      "id": "automacao-ia",
+      "title": { "en": "AI Automation", "pt": "Automação com IA" },
+      "category": "ai",
+      "video": "/Automacao-com-IA.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": true
+    },
+    {
+      "id": "site-2",
+      "title": { "en": "Brand Sites", "pt": "Sites Institucionais" },
+      "category": "websites",
+      "video": "/Site.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": false
+    },
+    {
+      "id": "ecommerce-2",
+      "title": { "en": "Storefronts", "pt": "Lojas Online" },
+      "category": "ecommerce",
+      "video": "/E-commerce.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": false
+    },
+    {
+      "id": "sistemas-2",
+      "title": { "en": "Internal Tools", "pt": "Ferramentas Internas" },
+      "category": "software",
+      "video": "/Sistemas.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": false
+    },
+    {
+      "id": "automacao-ia-2",
+      "title": { "en": "AI Workflows", "pt": "Fluxos com IA" },
+      "category": "ai",
+      "video": "/Automacao-com-IA.webm",
+      "href": "https://www.instagram.com/drinovacoes/",
+      "featured": false
+    }
+  ]
+}

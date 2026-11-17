@@ -14,6 +14,25 @@ na frente e a lâmina verde aparecendo atrás, nas pontas.
 - `HeroSection` passa a renderizar selo + `PortraitMark`.
 - Alt do retrato no dicionário (`hero.portraitAlt`, EN e PT).
 
+## Iteração 10
+
+- Removido o triângulo verde (canto cortado) e o hover GSAP do retrato —
+  foto cheia, sem clip-path.
+
+## Iteração 9
+
+- Título, selo, subtítulo e CTAs centralizados na section (sem spacer do
+  retrato antigo).
+- Retrato grande deslocado ~20% para a direita (`left-[20%]`).
+
+## Iteração 8
+
+- Retrato sai do lockup do título e vira camada absoluta à esquerda, atrás do
+  texto, grande e deslocada para baixo (como se saísse debaixo da tela).
+- Título, subtítulo e CTAs ficam na posição original (spacer no lugar do
+  retrato pequeno).
+- Asset atualizado para `public/v2/hero-portrait.png` (espelhado com `-scale-x-100`).
+
 ## Iteração 7
 
 - Título do hero (`DR` / `INOVAÇÕES`) passa a usar **Nunito Black** (Google Fonts), sans arredondada próxima do “dr” do logo-mark.

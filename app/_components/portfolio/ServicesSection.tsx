@@ -7,7 +7,7 @@ const SERVICE_VIDEOS = [
   "/Sistemas.webm",
   "/E-commerce.webm",
   "/Site.webm",
-  "/Automa%C3%A7%C3%A3o%20com%20IA.webm",
+  "/Automacao-com-IA.webm",
 ] as const;
 
 const VIDEO_TRANSITION = { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const };
