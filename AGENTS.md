@@ -45,6 +45,7 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-11-17 — Fix build Vercel (LetterGlitch props)](./changelogs/2026-11-17-fix-letterglitch-build-types.md)
 - [2026-11-17 — v2 como home + ícone novo](./changelogs/2026-11-17-v2-replace-home-and-icon.md)
 - [2026-11-17 — v2 / Section contato (“Let’s work together”)](./changelogs/2026-11-17-v2-contact-section.md)
 - [2026-11-17 — v2 / Section "Sobre mim" (estilo Lusion)](./changelogs/2026-11-17-v2-about-section.md)

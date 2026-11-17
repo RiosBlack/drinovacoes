@@ -171,10 +171,10 @@ const LetterGlitch = ({
   centerFade = 0,
   intro = true,
   lightMode = false,
-  backgroundColor,
-  dpr,
+  backgroundColor = null,
+  dpr = 0,
   className = '',
-  style,
+  style = {},
   ...rest
 }) => {
   const containerRef = useRef(null);
