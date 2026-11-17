@@ -377,6 +377,7 @@ function ProjectCard({
 export default function ProjectsSection() {
   const { t, lang } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<SVGPathElement>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [page, setPage] = useState(0);
 
@@ -432,6 +433,23 @@ export default function ProjectsSection() {
           once: true,
         },
       });
+
+      // Linha que corre atrás dos projetos até chegar na section About
+      const path = lineRef.current;
+      if (path) {
+        const len = path.getTotalLength();
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 70%",
+            end: "bottom 30%",
+            scrub: 0.6,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -456,9 +474,34 @@ export default function ProjectsSection() {
     <section
       id="projetos"
       ref={sectionRef}
-      className="relative min-h-screen w-full bg-[#0A0A0A] px-4 py-16 text-[#f5f5f7] md:px-6 md:py-20 lg:px-10"
+      className="relative min-h-screen w-full overflow-hidden bg-[#0A0A0A] px-4 py-16 text-[#f5f5f7] md:px-6 md:py-20 lg:px-10"
     >
-      <div className="mx-auto w-full max-w-[1920px]">
+      {/* Linha decorativa que desce atrás dos projetos (estilo Lusion) */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1000 1700"
+        preserveAspectRatio="xMidYMid slice"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+      >
+        <defs>
+          <linearGradient id="projectsLineGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#8affc9" />
+            <stop offset="50%" stopColor="#19E57B" />
+            <stop offset="100%" stopColor="#0f9a52" />
+          </linearGradient>
+        </defs>
+        <path
+          ref={lineRef}
+          d="M 120 -20 C 150 240 60 420 180 620 C 280 790 760 820 820 1040 C 870 1230 360 1260 420 1480 C 450 1590 520 1640 540 1720"
+          fill="none"
+          stroke="url(#projectsLineGrad)"
+          strokeWidth={4}
+          strokeLinecap="round"
+          opacity={0.9}
+        />
+      </svg>
+
+      <div className="relative z-10 mx-auto w-full max-w-[1920px]">
         <div className="projects-reveal mb-8 grid items-end gap-4 md:mb-10 md:grid-cols-[1fr_auto] md:gap-10">
           <div className="flex items-end gap-3 md:gap-5">
             <h2 className="font-brand text-[clamp(2.8rem,7vw,6rem)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-white">

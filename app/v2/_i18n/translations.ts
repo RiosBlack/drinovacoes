@@ -33,6 +33,18 @@ export const translations = {
     "projects.prev": "Previous",
     "projects.next": "Next",
     "projects.page": "Page",
+    "about.eyebrow": "About me",
+    "about.headline": "WHERE IDEAS / TURN INTO / SOFTWARE",
+    "about.panel1Title": "Fullstack developer",
+    "about.panel1Text":
+      "Deep, hands-on experience in software development — with many projects delivered and consolidated in production.",
+    "about.panel2Title": "AI, market & business",
+    "about.panel2Text":
+      "I design AI agents and automations, combining real market insight, marketing and solid business expertise.",
+    "about.pills":
+      "Fullstack|AI & Agents|Automations|Marketing|Business Vision",
+    "about.videoAlt": "Camera transition showcase video",
+    "about.cta": "Let's build together",
   },
   pt: {
     "preloader.loading": "Carregando",
@@ -60,6 +72,18 @@ export const translations = {
     "projects.prev": "Anterior",
     "projects.next": "Próxima",
     "projects.page": "Página",
+    "about.eyebrow": "Sobre mim",
+    "about.headline": "ONDE IDEIAS / VIRAM / SOFTWARE",
+    "about.panel1Title": "Programador fullstack",
+    "about.panel1Text":
+      "Larga experiência prática em desenvolvimento de software — com diversos projetos entregues e consolidados em produção.",
+    "about.panel2Title": "IA, mercado & negócio",
+    "about.panel2Text":
+      "Crio agentes e automações com IA, somando visão de mercado, marketing e uma sólida bagagem empresarial.",
+    "about.pills":
+      "Fullstack|IA & Agentes|Automações|Marketing|Visão Empresarial",
+    "about.videoAlt": "Vídeo com transição de câmera",
+    "about.cta": "Vamos construir juntos",
   },
 } as const;
 
