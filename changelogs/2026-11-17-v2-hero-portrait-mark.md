@@ -14,6 +14,11 @@ na frente e a lâmina verde aparecendo atrás, nas pontas.
 - `HeroSection` passa a renderizar selo + `PortraitMark`.
 - Alt do retrato no dicionário (`hero.portraitAlt`, EN e PT).
 
+## Iteração 3
+
+- O hover não troca mais o retrato de lugar com o selo.
+- Com o ponteiro sobre o retrato, o canto verde some de cima e reaparece embaixo, e fica tremendo no lugar até o ponteiro sair.
+
 ## Iteração 2
 
 - Posição inicial invertida: retrato à esquerda, selo à direita. O hover continua trocando os dois.
