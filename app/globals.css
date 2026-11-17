@@ -119,3 +119,33 @@
     text-wrap: balance;
   }
 }
+
+/* ============================================================
+   v2 redesign — animações isoladas (não afetam o site atual)
+   ============================================================ */
+@keyframes dr-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dr-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.dr-spin-slow {
+  animation: dr-spin 22s linear infinite;
+}
+
+.dr-spin-slow-reverse {
+  animation: dr-spin-reverse 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dr-spin-slow,
+  .dr-spin-slow-reverse {
+    animation: none;
+  }
+}
