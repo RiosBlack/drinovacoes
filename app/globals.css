@@ -149,3 +149,166 @@
     animation: none;
   }
 }
+
+/* WhatsApp float — canto esquerdo + flutuação / pulso */
+@keyframes wa-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.wa-float {
+  animation: wa-float 2.6s ease-in-out infinite;
+}
+
+.wa-float-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(37, 211, 102, 0.35);
+  animation: wa-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float,
+  .wa-float-pulse {
+    animation: none;
+  }
+}
+
+/* Instagram lateral — giro horizontal + explosão */
+@keyframes ig-flip {
+  0%,
+  8% {
+    transform: rotateY(0deg) scale(1);
+  }
+  38% {
+    transform: rotateY(360deg) scale(1);
+  }
+  48% {
+    transform: rotateY(360deg) scale(1.18);
+  }
+  58% {
+    transform: rotateY(360deg) scale(1);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
+
+@keyframes ig-spark {
+  0%,
+  42% {
+    transform: translate(-50%, -50%) scale(0.35);
+    opacity: 0;
+  }
+  48% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--ig-dx)),
+        calc(-50% + var(--ig-dy))
+      )
+      scale(0);
+  }
+}
+
+.ig-burst {
+  position: relative;
+  cursor: pointer !important;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+
+.ig-burst:hover,
+.ig-burst:focus-visible {
+  color: #19e57b;
+}
+
+/* Pad invisível acima do visual 3D — garante clique/hover estáveis */
+.ig-burst-hit {
+  position: absolute;
+  inset: -10px;
+  z-index: 20;
+  cursor: pointer !important;
+}
+
+.ig-burst-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 400px;
+  pointer-events: none !important;
+  z-index: 1;
+}
+
+.ig-burst-icon {
+  display: block;
+  transform-style: preserve-3d;
+  animation: ig-flip 3.4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+  pointer-events: none !important;
+  color: inherit;
+}
+
+.ig-burst-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #19e57b;
+  box-shadow: 0 0 8px rgba(25, 229, 123, 0.7);
+  animation: ig-spark 3.4s ease-out infinite;
+  pointer-events: none !important;
+  --ig-dx: 0px;
+  --ig-dy: -22px;
+}
+
+.ig-burst-spark--0 { --ig-dx: 0px; --ig-dy: -24px; }
+.ig-burst-spark--1 { --ig-dx: 17px; --ig-dy: -17px; }
+.ig-burst-spark--2 { --ig-dx: 24px; --ig-dy: 0px; }
+.ig-burst-spark--3 { --ig-dx: 17px; --ig-dy: 17px; }
+.ig-burst-spark--4 { --ig-dx: 0px; --ig-dy: 24px; }
+.ig-burst-spark--5 { --ig-dx: -17px; --ig-dy: 17px; }
+.ig-burst-spark--6 { --ig-dx: -24px; --ig-dy: 0px; }
+.ig-burst-spark--7 { --ig-dx: -17px; --ig-dy: -17px; }
+
+.ig-burst-spark:nth-child(odd) {
+  background: #f5f5f7;
+  box-shadow: 0 0 6px rgba(245, 245, 247, 0.5);
+  width: 4px;
+  height: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig-burst-icon,
+  .ig-burst-spark {
+    animation: none;
+  }
+}

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const WHATSAPP_NUMBER = "5575981414537";
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Olá! Gostaria de conversar sobre um projeto de software.",
+  "Hello, I'm interested in your services.",
 );
 
 export default function WhatsAppFloat() {
@@ -12,15 +12,18 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp — (75) 98141-4537"
-      className="fixed bottom-6 right-6 z-40 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+      className="fixed bottom-6 left-6 z-40 cursor-pointer transition-transform hover:scale-105 active:scale-95"
     >
-      <Image
-        src="/whatsapp.png"
-        alt="WhatsApp"
-        width={56}
-        height={56}
-        className="drop-shadow-lg"
-      />
+      <span className="wa-float relative inline-flex">
+        <span className="wa-float-pulse" aria-hidden="true" />
+        <Image
+          src="/whatsapp.png"
+          alt="WhatsApp"
+          width={46}
+          height={46}
+          className="relative z-10 drop-shadow-lg"
+        />
+      </span>
     </a>
   );
 }

@@ -4,27 +4,20 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { Mail } from "lucide-react";
-import {
-  FaBehance,
-  FaDribbble,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa6";
 import { useLanguage } from "../_i18n/LanguageProvider";
 import LetterGlitch from "./LetterGlitch";
 import PortraitMark from "./PortraitMark";
 import RotatingSeal from "./RotatingSeal";
 import LanguageToggle from "./LanguageToggle";
+import { AudioToggle } from "./BackgroundAudio";
 
 type HeroSectionProps = {
   active: boolean;
 };
 
 const SOCIALS = [
-  { href: "https://behance.net", label: "Behance", Icon: FaBehance },
-  { href: "https://dribbble.com", label: "Dribbble", Icon: FaDribbble },
   { href: "https://instagram.com", label: "Instagram", Icon: FaInstagram },
-  { href: "https://linkedin.com", label: "LinkedIn", Icon: FaLinkedinIn },
 ];
 
 export default function HeroSection({ active }: HeroSectionProps) {
@@ -102,6 +95,7 @@ export default function HeroSection({ active }: HeroSectionProps) {
 
             <div className="flex items-center gap-3">
               <LanguageToggle />
+              <AudioToggle />
               <a
                 href="#contato"
                 aria-label={t("hero.contact")}
@@ -112,8 +106,8 @@ export default function HeroSection({ active }: HeroSectionProps) {
             </div>
           </header>
 
-          {/* Redes sociais na lateral esquerda */}
-          <div className="hero-reveal absolute left-5 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-4 md:flex">
+          {/* Instagram na lateral — giro horizontal + explosão */}
+          <div className="hero-reveal absolute left-5 top-1/2 z-40 hidden -translate-y-1/2 md:block">
             {SOCIALS.map(({ href, label, Icon }) => (
               <a
                 key={label}
@@ -121,9 +115,20 @@ export default function HeroSection({ active }: HeroSectionProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-white/60 transition-colors duration-200 hover:text-[#19E57B]"
+                className="ig-burst relative z-50 block h-12 w-12 text-white/60"
               >
-                <Icon className="h-5 w-5" />
+                {/* Camada de hit 2D por cima de toda a animação 3D */}
+                <span className="ig-burst-hit" aria-hidden="true" />
+                {/* Visual animado — nunca recebe mouse */}
+                <span className="ig-burst-visual" aria-hidden="true">
+                  <Icon className="ig-burst-icon h-[30px] w-[30px]" />
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className={`ig-burst-spark ig-burst-spark--${i}`}
+                    />
+                  ))}
+                </span>
               </a>
             ))}
           </div>

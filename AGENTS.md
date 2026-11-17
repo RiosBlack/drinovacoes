@@ -19,7 +19,7 @@ Portfólio da empresa **DR Inovações** (desenvolvimento de software). Site min
 app/
   v2/                             # Reformulação do site (section por section, rota isolada)
   v2/_i18n/                       # i18n leve (EN padrão + PT): provider + dicionário
-  v2/_components/                 # Section 1: Preloader, Hero, LetterGlitch, RotatingSeal, PortraitMark
+  v2/_components/                 # Section 1: Preloader, Hero, LetterGlitch, RotatingSeal, PortraitMark, BackgroundAudio
   _components/portfolio/          # Componentes do novo portfólio
   _components/portfolio/project-detail/  # Layout de detalhe de projeto
   hooks/useSmoothScroll.ts        # Lenis + GSAP ticker
@@ -43,6 +43,8 @@ sanity/client.ts           # Cliente Sanity (blog)
 
 ## Changelog
 
+- [2026-11-17 — v2 / Música de fundo + mute](./changelogs/2026-11-17-v2-background-audio.md)
+- [2026-11-17 — WhatsApp flutuante à esquerda com animação](./changelogs/2026-11-17-whatsapp-float-left-animate.md)
 - [2026-11-17 — v2 / Marca com retrato no hero](./changelogs/2026-11-17-v2-hero-portrait-mark.md)
 - [2026-11-17 — v2 / Section 1 (Preloader + Hero vivo)](./changelogs/2026-11-17-v2-section1-hero.md)
 - [2026-11-17 — Aprovar builds do pnpm](./changelogs/2026-11-17-pnpm-allow-builds.md)

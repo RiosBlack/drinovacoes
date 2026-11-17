@@ -8,6 +8,7 @@ import {
   useSmoothScroll,
 } from "../hooks/useSmoothScroll";
 import { LanguageProvider } from "./_i18n/LanguageProvider";
+import { BackgroundAudioProvider } from "./_components/BackgroundAudio";
 import Preloader from "./_components/Preloader";
 import HeroSection from "./_components/HeroSection";
 
@@ -47,10 +48,12 @@ function V2Experience() {
   }, [revealed]);
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] text-[#f5f5f7]">
-      <Preloader onComplete={() => setRevealed(true)} />
-      <HeroSection active={revealed} />
-    </main>
+    <BackgroundAudioProvider active={revealed}>
+      <main className="min-h-screen bg-[#0A0A0A] text-[#f5f5f7]">
+        <Preloader onComplete={() => setRevealed(true)} />
+        <HeroSection active={revealed} />
+      </main>
+    </BackgroundAudioProvider>
   );
 }
 
