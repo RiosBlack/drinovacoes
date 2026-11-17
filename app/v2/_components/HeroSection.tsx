@@ -195,7 +195,7 @@ export default function HeroSection({
               </div>
             </div>
 
-            <p className="hero-reveal mt-10 max-w-md text-center text-sm text-white/60 md:mt-12 md:max-w-lg md:text-base">
+            <p className="hero-reveal mt-5 max-w-md text-center text-sm text-white/60 md:mt-10 md:max-w-lg md:text-base">
               {t("hero.subtitle")}
             </p>
 
